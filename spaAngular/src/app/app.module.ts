@@ -25,9 +25,6 @@ import { AuthGuard } from './utils/service/auth-guard.service';
 import { ApiClientService } from './utils/service/api-client.service';
 import { NavBarUsuarioService } from './utils/service/nav-bar-usuario.service';
 import { ErrorValidationService } from './utils/service/error-validation.service';
-import { PanelAdminComponent } from './components/panel-admin/panel-admin.component';
-import { PanelUserComponent } from './components/panel-user/panel-user.component';
-import { PerfilUsuarioComponent } from './components/perfil/perfil-usuario.component';
 import { EnviarMensajeComponent } from './components/usuarios/enviar-mensaje/enviar-mensaje.component';
 
 @NgModule({
@@ -39,10 +36,7 @@ import { EnviarMensajeComponent } from './components/usuarios/enviar-mensaje/env
     NavbarAdminComponent,
     NavbarPanelComponent,
     SidebarAdminComponent,
-    SidebarPanelComponent,
-    PanelAdminComponent,
-    PanelUserComponent,
-    PerfilUsuarioComponent
+    SidebarPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +71,6 @@ import { EnviarMensajeComponent } from './components/usuarios/enviar-mensaje/env
       NavBarUsuarioService,
       ErrorValidationService
   ],
-  entryComponents: [PerfilUsuarioComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

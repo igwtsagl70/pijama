@@ -1,0 +1,106 @@
+<div class="">
+    <div mat-dialog-title class="mb-head">
+        <div class="close-section">
+            <a (click)="onNoClick()"><i class="material-icons">close</i></a>
+        </div>
+        <div class="title-section">
+                <h5>Pedido</h5>
+        </div>
+        <div class="options-section">
+            <button mat-button color="primary" class="main-botton" (click)="editar()"  *ngIf="!isAgregar">
+                <i class="material-icons">done</i> Editar
+            </button>
+            <button mat-button color="primary" class="main-botton" (click)="guardar()"  *ngIf="isAgregar">
+                <i class="material-icons">done</i> Comprar
+            </button>
+            <button mat-button color="primary" class="main-botton" (click)="guardarPedido()"  *ngIf="isAgregar" style="background: #7c4dff;">
+                <i class="material-icons">save</i> Guardar
+            </button>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="lista-productos">
+                        <div class="row-modelo" *ngFor="let producto of pedido.pedidoProductos; let i = index">
+                            <div class="row">
+                                <div class="col-12  col-sm-4 col-md-1">
+                                    <div class="imagen">
+                                        <img src="{{getImg(producto)}}" alt="" *ngIf="producto.imagenes != null && producto.imagenes.length > 0" style="height: 50px;text-align: center;">
+                                        <img src="../../../../assets/media/fondo_img.svg" alt="" style="height: 50px;" *ngIf="producto.imagenes == null || producto.imagenes.length == 0">                                      
+                                    </div>
+                                </div>
+                                <div class="col-12  col-sm-4 col-md-4">
+                                    <p style="margin: 0px;">{{producto.nombre}}</p>
+                                    <div class="row-pieza" *ngFor="let pieza of producto.pedidoProductoPiezas; let i = index">                                        
+                                        <p>{{pieza.descripcion}} {{getGenero(producto.genero)}} - {{getTalla(producto.talla)}}</p>
+                                    </div>                                    
+                                </div>
+                                <div class="col-12  col-sm-4 col-md-2">
+                                    <p>Mayoreo: {{producto.mayoreo | currency}}</p>
+                                </div>
+                                <div class="col-12  col-sm-4 col-md-2">
+                                    <p>Menudeo: {{producto.menudeo | currency}}</p>
+                                </div>
+                                <div class="col-12  col-sm-4 col-md-2">
+                                    <p>Cantidad: {{producto.cantidad}}</p>
+                                </div>
+                                <div class="col-12  col-sm-4 col-md-1">
+                                    <button mat-button [matMenuTriggerFor]="menu" *ngIf="identityUserService.isAdmin()"> <mat-icon>more_vert</mat-icon></button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item  (click)="openEditarProducto(null, producto)">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Editar</span>
+                                        </button>
+                                        <button mat-menu-item  (click)="eliminarProducto(i)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Eliminar</span>
+                                        </button>
+                                    </mat-menu>
+                                    <button mat-menu-item *ngIf="!identityUserService.isAdmin()"  (click)="eliminarProducto(i)">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>Eliminar</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 form-col" (click)="openAgregarProducto()">
+                    <button mat-button>Agregar producto</button>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 form-col">
+                    <div class="form-group">
+                        <mat-form-field title="Nota" class="input-textArea" appearance="outline"
+                            style="width: 100%">
+                            <textarea matInput #nota placeholder="Nota" maxlength="250"
+                                [(ngModel)]="pedido.nota" name="nota"></textarea>
+                            <span matSuffix class="matSuffixEmpty"></span>
+                            <mat-hint align="end">{{nota.value?.length || 0}}/250</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions style="float: right;">
+      <div class="row ">
+        <div class="col-sm-12 col-md-12">
+          <p class="comprobante-totales">
+            <span class="color-subtext"><b class="color-text">Cantidad:</b> {{pedido.cantidad | number: '.2-2' }}</span>
+            <span class="color-subtext" *ngIf="pedido.descuento > 0"><b class="color-text">Subtotal:</b> ${{pedido.subtotal | number: '.2-2' }}</span>
+            <span class="color-subtext" *ngIf="pedido.descuento > 0"><b class="color-text">Descuento:</b> ${{pedido.descuento | number: '.2-6' }}</span>
+            <span class="color-subtext"><b class="color-text">Total:</b> ${{pedido.total | number: '.2-2' }}</span>
+          </p>
+        </div>
+      </div>
+    </mat-dialog-actions>
+    
+</div>

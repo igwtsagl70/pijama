@@ -7,6 +7,8 @@ import { ConstantsRoutes } from '../constants/ConstantsRoutes';
 import { ToastrService } from 'ngx-toastr';
 import { IdentityUser } from '../IdentityUser/IdentityUser';
 import { ApiResponse } from '../../models/shared/ApiResponse';
+import { Pedido } from 'src/app/models/pedido/pedido';
+import { PedidoAgregar } from 'src/app/models/pedido/pedidoAgregar';
 
 @Injectable()
 export class SessionService {
@@ -72,9 +74,9 @@ export class SessionService {
         // Te lleva a login con un link de respuesta
         if (url && callBack) { this.router.navigate([url], { queryParams: { callBack } }); } else {
             if (url) { this.router.navigate([url]); } else { switch (this.identityUserService.getUserTipo()) {
-                case 'admin': this.router.navigate([ConstantsRoutes.ANGULAR_PANEL_ADMIN]);
+                case 'admin': this.router.navigate([ConstantsRoutes.ANGULAR_ADMIN]);
                               break;
-                case 'user': this.router.navigate([ConstantsRoutes.ANGULAR_PANEL_USUARIO]);
+                case 'user': this.router.navigate([ConstantsRoutes.ANGULAR_INICIO]);
                              break;
             }
             }
@@ -167,4 +169,52 @@ export class SessionService {
         }
     }
 
+    //COOKIES
+    setCookie(name: string, value: string,days: number) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    getCookie(name: string) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    
+    eraseCookie(name: string) {   
+        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+
+    crearCookiePedido(pedido: PedidoAgregar){
+        this.deleteCookiePedido();
+        this.setCookie("pedido", this.Json_PedidoToJson(pedido), 5);
+    }
+
+    getCookiePedido(): PedidoAgregar{
+        var sJson = this.getCookie("pedido");
+        if(sJson == null) return null;
+        return this.Json_JsonToPedido(sJson);
+    }
+
+    deleteCookiePedido(){
+        this.eraseCookie("pedido");
+    }
+
+    Json_PedidoToJson(pedido: PedidoAgregar): string{
+        return JSON.stringify(pedido);
+    }
+
+    Json_JsonToPedido(cadena: string): PedidoAgregar{
+        return JSON.parse(cadena);
+    }
 }

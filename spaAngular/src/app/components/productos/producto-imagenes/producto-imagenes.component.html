@@ -1,0 +1,36 @@
+<div class="modal-md">
+    <div mat-dialog-title class="mb-head">
+        <div class="close-section">
+            <a (click)="onNoClick()"><i class="material-icons">close</i></a>
+        </div>
+        <div class="title-section">
+                <h5>Imágenes</h5>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <div class="container">
+            <div class="row" *ngIf="imagenes && imagenes.length > 0">
+                <div *ngFor="let archivo of imagenes; let i = index" class="col-12  col-sm-4 col-md-3 form-col">
+                    <mat-card class="archivos archivos-img">
+                        <mat-card-content>
+                        <div [style.background-image]="'url('+getArchivoUrl(archivo)+')'" class="imagen" (click)="openVer(archivo)"></div>                                              
+                        <!-- <img mat-card-image src="{{getArchivoUrl(archivo)}}" alt="{{archivo.nombre}}"> -->
+                            <div class="borrar" *ngIf="identityUserService.getUserTipo() == 'admin'">                            
+                                <mat-icon (click)="eliminar(archivo)">close</mat-icon>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="row" *ngIf="imagenes == null || imagenes.length == 0">
+                <div class="col-sm-12 col-md-12 form-col">
+                    <div class="search-instructions text-center">
+                        <p>Sin resultados, realice una nueva búsqueda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+    </mat-dialog-actions>
+</div>

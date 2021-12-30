@@ -22,7 +22,7 @@
                     <div class="col-sm-12 col-md-2">
                         <div class="img-container">
                             <img *ngIf="usuario.imagen == '' || usuario.imagen == null" src="../../../../../assets/media/user.svg"/>
-                            <div *ngIf="usuario.imagen !== '' && usuario.imagen != undefined" [style.background-image]="'url('+setUrlImagen(usuario)+')'" class="img-profile"></div>     
+                            <div *ngIf="usuario.imagen !== '' && usuario.imagen != undefined" [style.background-image]="'url('+setUrlImagen()+')'" class="img-profile"></div>     
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-10">
@@ -55,7 +55,7 @@
                                     </div> 
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6 form-col">
+                                    <div class="col-sm-12 col-md-12 form-col">
                                         <div class="form-group">
                                             <mat-form-field class="input-disabled" appearance="outline" style="width: 100%">
                                                 <mat-label>Nombre</mat-label>
@@ -63,16 +63,29 @@
                                                 <span matSuffix class="matSuffixEmpty"></span>
                                             </mat-form-field>
                                         </div>
-                                    </div>
+                                    </div>                                  
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-12 col-md-6 form-col">
                                         <div class="form-group">
                                             <mat-form-field class="input-disabled" appearance="outline" style="width: 100%">
-                                                <mat-label>Casa</mat-label>
-                                                <input type="text" maxlength="50" matInput [(ngModel)]="usuario.casa" required #casa="ngModel" id="casa" name="casa" title="Casa">
+                                                <mat-label>Número de Casa</mat-label>
+                                                <input type="number" maxlength="6" matInput placeholder="Número de Casa"
+                                                    [(ngModel)]="usuario.casaNumero" #casaNumero="ngModel" id="casaNumero"
+                                                    name="casaNumero" title="Número de Casa" min="0" max="99999">
                                                 <span matSuffix class="matSuffixEmpty"></span>
                                             </mat-form-field>
                                         </div>
                                     </div>
+                                    <div class="col-sm-12 col-md-6 form-col">
+                                        <div class="form-group">
+                                            <mat-form-field class="input-disabled" appearance="outline" style="width: 100%">
+                                                <mat-label>Letra de casa</mat-label>
+                                                <input type="text" maxlength="50" matInput [(ngModel)]="usuario.casaLetra" #casa="ngModel" id="casaLetra" name="casaLetra" title="Letra de Casa">
+                                                <span matSuffix class="matSuffixEmpty"></span>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>  
                                 </div>
                                 <div class="row">                                
                                     <div class="col-sm-12 col-md-6 form-col">
@@ -86,6 +99,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-6 form-col">
                                         <mat-form-field appearance="outline">
+                                            <mat-label>Fecha de alta</mat-label>
                                             <input matInput [matDatepicker]="picker" placeholder="Selecciona una fecha" name="fecha" [value]="fecha.value" [(ngModel)]="usuario.fechaIngreso">
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>

@@ -70,7 +70,7 @@ export class AgregarUsuarioComponent implements OnInit {
         );
   }
 
-  guardar(form: FormControl) {
+  guardar(form: any) {
     this.usuario.fechaIngreso = this.fecha.value;
     this.loadingService.show();
     if (form.valid) {
@@ -92,7 +92,7 @@ export class AgregarUsuarioComponent implements OnInit {
     }
   }
 
-  editar(form: FormControl) {
+  editar(form: any) {
     this.loadingService.show();
     if (form.valid) {
         this.usuarioService.putUsuario(this.usuario)

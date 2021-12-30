@@ -1,0 +1,59 @@
+<div class="modal-md">
+    <div mat-dialog-title class="mb-head">
+        <div class="close-section">
+            <a (click)="onNoClick()"><i class="material-icons">close</i></a>
+        </div>
+        <div class="title-section">
+                <h5>Seleccionar producto</h5>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col col-12 col-sm-12 col-md-5 form-col">
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput [(ngModel)]="palabra" name="palabra" (keyup)="buscarPalabra($event.target.value)" placeholder="">
+                        <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col col-12 col-sm-12 col-md-4 form-col" style="width: 100%; margin-top: 15px;">
+                    <mat-form-field>
+                        <mat-label>Ordenar por</mat-label>
+                        <mat-select [(ngModel)]="ordenar" name="ordenar"  required (selectionChange)="buscar();">
+                            <mat-option *ngFor="let tipo of tipos" [value]="tipo.key">{{tipo.value}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col col-12 col-sm-12 col-md-3 second-opcions-header">
+                    <button mat-button (click)="buscar()"><mat-icon>refresh</mat-icon></button>
+                </div>
+            </div>
+            <div class="row" *ngIf="documentos && documentos.length > 0">
+                <div class="col-12  col-sm-12 col-md-12 form-col">
+                    <mat-selection-list>
+                        <mat-list-option *ngFor="let documento of documentos" [value]="documento" (click)="seleccionar(documento)">
+                            <div mat-line>{{documento.nombre}}</div>
+                            <div mat-line> Mayoreo: {{documento.mayoreo}}  - Menudeo: {{documento.menudeo}}</div>
+                        </mat-list-option>
+                      </mat-selection-list>
+                </div>
+            </div>
+            <div class="row" *ngIf="documentos == null || documentos.length == 0">
+                <div class="col-sm-12 col-md-12 form-col">
+                    <div class="search-instructions text-center">
+                        <p>Sin resultados, realice una nueva búsqueda.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 text-right paginado" *ngIf="documentos != null && documentos.length > 0">                 
+                <button mat-button (click)="anteriorPagina()" *ngIf="page != 0"> <mat-icon>arrow_back_ios</mat-icon></button>
+                <button mat-button (click)="siguientePagina()" *ngIf="documentos != null && documentos.length == 25"> <mat-icon>arrow_forward_ios</mat-icon></button>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+    </mat-dialog-actions>
+</div>

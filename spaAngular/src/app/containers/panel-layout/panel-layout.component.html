@@ -1,16 +1,13 @@
-
 <div class="main-app">
     <mat-toolbar class="main-header" id="main-header">
-        <i class="material-icons sidenav-toggle" (click)="changeOpen()">dehaze</i>
         <app-navbar-panel class="app-navbar-inicio"></app-navbar-panel>
     </mat-toolbar>
 
     <mat-sidenav-container class="main-sidenav"  id="main-container">
-        <mat-sidenav #sidenav mode="side"  [(opened)]="identityUserService.openSidebar" class="main-sidenav-menu" id="main-sidebar" *ngIf="identityUserService">
-            <app-sidebar-panel class="sidebar-content" id="Menu"></app-sidebar-panel>
-        </mat-sidenav>
+
         <mat-sidenav-content class="main-sidenav-container" id="main-content">
             <router-outlet></router-outlet>
+            <div class="box-main-footer"></div>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

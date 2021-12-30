@@ -17,10 +17,8 @@
                     </div>
                 </div>
                 <div class="col col-12 col-sm-12 col-md-8 second-opcions-header order-1 order-md-2">
-                    <button mat-raised-button color="accent" class="pointer" (click)="openAgregar()"><mat-icon matSuffix>add</mat-icon> Usuario</button>
-                    <div class="btn-refresh pointer">
-                        <i class="material-icons pointer" (click)="buscar()">refresh</i>
-                    </div>
+                    <button mat-raised-button color="accent" class="pointer" (click)="openAgregar()"><mat-icon matSuffix>add</mat-icon></button>
+                    <button mat-raised-button color="accent" class="pointer" (click)="buscar()"><mat-icon matSuffix>refresh</mat-icon></button> 
                 </div>
             </div>
         </div>
@@ -55,7 +53,10 @@
                                 <!-- Casa Column -->
                                 <ng-container matColumnDef="casa">
                                   <th mat-header-cell *matHeaderCellDef > Casa </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.casa}} </td>
+                                  <td mat-cell *matCellDef="let element">
+                                    <span *ngIf="element.casa != 'null'">{{element.casa}}</span>
+                                    <span *ngIf="element.casa == 'null'"> - </span> 
+                                  </td>
                                 </ng-container>
                               
                                 <!-- Teléfono Column -->

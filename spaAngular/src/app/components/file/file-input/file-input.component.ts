@@ -30,7 +30,7 @@ export class FileInputComponent {
         private toastr: ToastrService,
         private errorValidationService: ErrorValidationService,
         // tslint:disable-next-line: variable-name
-        private _DomSanitizationService: DomSanitizer
+        public _DomSanitizationService: DomSanitizer
     ) {
 
     }

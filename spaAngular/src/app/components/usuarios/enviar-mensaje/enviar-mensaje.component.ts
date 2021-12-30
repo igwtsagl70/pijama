@@ -50,7 +50,7 @@ export class EnviarMensajeComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  guardar(form: FormControl) {
+  guardar(form: any) {
     this.mensaje.mensaje = this.sMensaje;
     this.mensaje.correo = this.IsCorreo;
     this.loadingService.show();

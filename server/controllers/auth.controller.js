@@ -3,7 +3,6 @@ const Usuario = require('../models/usuario');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const configJwt = require('../config/config');
-const Config = require('../models/config');
 const sendGrid = require('../utils/sendGrid');
 
 authCtrl.getUsuarios = async (req, res) => {
@@ -17,17 +16,22 @@ authCtrl.getUsuarios = async (req, res) => {
 }
 
 authCtrl.register = async (req, res) => {
-    var hashedPassword = req.body.pass;
+    //Validar existencia usuario 
+    var fUsuario = await Usuario.findOne({ user: req.body.email, estado: '1' });
+    if (fUsuario) return res.status(404).send('Ya existe usuario con ese nombre.');
+
+    var hashedPassword = req.body.password;
     Usuario.create({
-        user: req.body.user,
-        nombre: req.body.nombre,
+        user: req.body.email,
         pass: hashedPassword,
-        fechaIngreso: new Date(),
+        nombre: '',
+        rfc: '',
+        domicilio: '',
         tipo: 'user',
         estado: '1'
     }).then(r => {
         try{
-        var token = jwt.sign({ id: r._id, tipo: r.tipo, casa: r.casa, user: r.user }, configJwt.secret_jwt, {
+        var token = jwt.sign({ id: r._id, tipo: r.tipo, user: r.user }, configJwt.secret_jwt, {
         expiresIn: 86400 // expires in 24 hours
       });
       res.status(200).send({ auth: true, token: token });}
@@ -90,26 +94,7 @@ authCtrl.logout = (req, res) => {
   res.status(200).send({ auth: false, token: null });
 }
 
-authCtrl.resetPass = async (req, res) => {
-	try{
-        const user = req.body.email;    
-        const pass = makeid(5);
-        //var hashedPassword = bcrypt.hashSync(pass, 8);
-        var fConfig = await Config.findOne({main: true});
-        if (!fConfig) return res.status(404).send('Error al enviar el correo. (Sin config)');
-    
-        var query = { user: user, estado: '1' };
-        var rUsuario = await Usuario.updateOne(query, { $set: { pass: pass }})
-    
-        if (!rUsuario) return res.status(404).send('Usuario no actualizado.');
-
-        var rMail = await sendGrid.sendMailResetPass(user, pass, fConfig.link);    
-        if (rMail) res.status(200).send({ success: true, payload: 'OK' });
-        else res.status(404).send("Error al enviar el correo");
-    }
-    catch(e){
-        res.status(404).send("Contraseña No generada");
-    } 
+authCtrl.resetPass = async (req, res) => { 
 }
 
 function makeid(length) {

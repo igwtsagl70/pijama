@@ -1,31 +1,22 @@
 <div class="navbar-main">
         <div class="nv-logo">
             <a href="#">
-                <img src="../../../../../assets/media/logo.svg" class="nv-logo-big" alt="ccondominium" />
+                <img src="../../../../../assets/media/logo.jpeg" class="nv-logo-big" alt="anja" />
             </a>
             <a href="#">
-                <img src="../../../../../assets/media/logo.svg" class="nv-logo-small" alt="ccondominium" />
+                <img src="../../../../../assets/media/logo.jpeg" class="nv-logo-small" alt="anja" />
             </a>
         </div>
         <div class="nv-empresa-datos">
-            <div class="empresa-nombre">
-                <div *ngIf="configCondominio">{{configCondominio.nombre}}</div>
-                <div *ngIf="!configCondominio" class="noContent">Condominio</div>
-            </div>
-            <div class="empresa-sucursal">
-                <div *ngIf="dUser && dUser.casa != undefined && dUser.casa != ''">Casa: {{dUser.casa}}</div>
-                <div *ngIf="!dUser || dUser.casa == undefined || dUser.casa == ''">Sin casa asignada</div>
-            </div>
         </div>
-        <div class="nv-options">
+        <div class="nv-options">            
+            <i class="material-icons icono-nav" (click)="openPerfil()">assignment</i> 
+            <i class="material-icons icono-nav" (click)="openCarrito()">shopping_cart</i> 
             <div class="nv-option-element nv-option-profile dropdown show">
                 <div class="nv-img-profile pointer" title="Perfil"  style="cursor:pointer">
-                    <img *ngIf="dUser.imagen == '' || dUser.imagen == null" src="../../../../../assets/media/user.svg" mat-button [matMenuTriggerFor]="menu"/>
-                    <div *ngIf="dUser.imagen !== '' && dUser.imagen != undefined" [style.background-image]="'url(' + dUser.imagen + ')'" class="img-profile" mat-button [matMenuTriggerFor]="menu"></div>
+                    <img src="../../../../../assets/media/user.svg" mat-button [matMenuTriggerFor]="menu"/>
                     <mat-menu #menu="matMenu">
                         <div class="nv-user-data">
-                            <span *ngIf="dUser && dUser.nombre"><strong>{{dUser.nombre}}</strong></span>
-                            <span *ngIf="!dUser && !dUser.nombre"><strong>{{dUser.nombre}}</strong></span>
                             <span title="{{iUser.user}}">{{iUser.user}}</span>
                         </div>
                         <div class="dropdown-divider"></div>

@@ -10,6 +10,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthService } from './auth.service';
+import { RegistroComponent } from './registro/registro.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { AuthService } from './auth.service';
     ],
     declarations: [
         LoginComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        RegistroComponent
     ],
     providers: [
         AuthService

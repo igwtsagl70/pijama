@@ -21,41 +21,42 @@ export class UsuarioService {
   getUsuarios(faltantes: string): Observable<ApiResponse<UsuarioView[]>> {
     let params = new HttpParams();
     params = params.set('faltantes', faltantes);
-    return this.apiClient.apiGetParam<UsuarioView[]>(ConstantsRoutes.USUARIOS_GET, params);
+    return this.apiClient.apiGetParam<UsuarioView[]>(ConstantsRoutes.LOGIN, params);
   }
 
   getUsuariosCasa(casa: string): Observable<ApiResponse<UsuarioView[]>> {
     let params = new HttpParams();
     params = params.set('casa', casa);
-    return this.apiClient.apiGetParam<UsuarioView[]>(ConstantsRoutes.USUARIOS_CASA_GET, params);
+    return this.apiClient.apiGetParam<UsuarioView[]>(ConstantsRoutes.LOGIN, params);
   }
 
   getUsuario(id: string): Observable<ApiResponse<UsuarioAgregar>> {
-    return this.apiClient.apiGet<UsuarioAgregar>(ConstantsRoutes.USUARIO_GET + `/${id}`);
+    return this.apiClient.apiGet<UsuarioAgregar>(ConstantsRoutes.LOGIN + `/${id}`);
   }
 
   postUsuario(usuario: UsuarioAgregar): Observable<ApiResponse<string>> {
-    return this.apiClient.apiPost<string, UsuarioAgregar>(ConstantsRoutes.USUARIO_AGREGAR, usuario);
+    return this.apiClient.apiPost<string, UsuarioAgregar>(ConstantsRoutes.LOGIN, usuario);
   }
 
   putUsuario(usuario: UsuarioAgregar): Observable<ApiResponse<string>> {
-    return this.apiClient.apiPut<string, UsuarioAgregar>(ConstantsRoutes.USUARIO_EDITAR + `/${usuario._id}`, usuario);
+    return this.apiClient.apiPut<string, UsuarioAgregar>(ConstantsRoutes.LOGIN + `/${usuario._id}`, usuario);
   }
 
    // tslint:disable-next-line: variable-name
   deleteUsuario(id: string): Observable<ApiResponse<string>> {
-    return this.apiClient.apiDelete<string>(ConstantsRoutes.USUARIO_ELIMINAR + `/${id}`);
+    return this.apiClient.apiDelete<string>(ConstantsRoutes.LOGIN + `/${id}`);
   }
 
   cambioEstadoUsuario(usuario: UsuarioCambioEstado): Observable<ApiResponse<string>> {
-    return this.apiClient.apiPost<string, UsuarioCambioEstado>(ConstantsRoutes.USUARIO_CAMBIO_ESTADO, usuario);
+    return this.apiClient.apiPost<string, UsuarioCambioEstado>(ConstantsRoutes.LOGIN, usuario);
   }
 
   mensajeUsuario(usuario: UsuarioMensaje): Observable<ApiResponse<string>> {
-    return this.apiClient.apiPost<string, UsuarioMensaje>(ConstantsRoutes.USUARIO_ENVIAR_MENSAJE, usuario);
+    return this.apiClient.apiPost<string, UsuarioMensaje>(ConstantsRoutes.LOGIN, usuario);
   }
 
   enviarInvitacionUsuario(usuario: UsuarioView): Observable<ApiResponse<string>> {
-    return this.apiClient.apiPost<string, UsuarioView>(ConstantsRoutes.USUARIO_ENVIAR_INVITACION, usuario);
+    return this.apiClient.apiPost<string, UsuarioView>(ConstantsRoutes.LOGIN, usuario);
   }
+
 }

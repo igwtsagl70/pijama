@@ -1,7 +1,7 @@
 {
-  "name": "ccondominium",
+  "name": "pijama",
   "version": "1.0.0",
-  "description": "Control de condominios",
+  "description": "Venta de pijama",
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xalonso518/ccondominium.git"
+    "url": "git+https://github.com/xalonso518/pijama.git"
   },
   "keywords": [],
   "author": "xAlonso",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xalonso518/ccondominium/issues"
+    "url": "https://github.com/xalonso518/pijama/issues"
   },
-  "homepage": "https://github.com/xalonso518/ccondominium#readme",
+  "homepage": "https://github.com/xalonso518/pijama#readme",
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",
@@ -30,7 +30,8 @@
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
     "path": "^0.12.7",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "xlsx": "^0.15.2"
   },
   "devDependencies": {
     "nodemon": "^1.19.3"

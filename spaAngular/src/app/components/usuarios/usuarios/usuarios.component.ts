@@ -36,7 +36,14 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
+    this.isMobile();
     this.startGetDatos();
+  }
+
+  isMobile() {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        this.identityUserService.openSidebar = false;
+    }
   }
 
   applyFilter(filterValue: string) {

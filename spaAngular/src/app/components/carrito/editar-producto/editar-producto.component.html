@@ -1,0 +1,117 @@
+<div class="modal-md">
+    <div mat-dialog-title class="mb-head">
+        <div class="close-section">
+            <a (click)="onNoClick()"><i class="material-icons">close</i></a>
+        </div>
+        <div class="title-section">
+                <h5>Agregar producto</h5>
+        </div>
+        <div class="options-section" *ngIf="productoForm.valid">
+            <button mat-button color="primary" class="main-botton" (click)="guardar(productoForm)">
+                <i class="material-icons">done</i> Aceptar
+            </button>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-container container">
+                        <form novalidate #productoForm="ngForm">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-4 form-col">
+                                    <div class="producto-imagen">
+                                        <img src="{{getImg()}}" alt="" *ngIf="producto.imagenes != null && producto.imagenes.length > 0">
+                                        <img src="../../../../assets/media/fondo_img.svg" alt="" style="height: 205px;" *ngIf="producto.imagenes == null || producto.imagenes.length == 0">                            
+                                    </div>
+                                    <span class="material-icons-outlined producto-imagen-siguiente" *ngIf="producto.imagenes != null && producto.imagenes.length > 1">arrow_forward_ios</span>                        
+                                </div>
+                                <div class="col-sm-12 col-md-8 form-col">
+                                    <div class="producto-editar">
+                                        <p class="producto-editar-nombre">{{producto.nombre}}</p>
+                                        <p class="producto-editar-descripcion">{{producto.descripcion}}</p>
+                                        <p class="producto-editar-precio">Mayoreo: <span>{{producto.mayoreo | currency}}</span></p>
+                                        <p class="producto-editar-precio">Menudeo: <span>{{producto.menudeo | currency}}</span></p>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <mat-form-field class="input-disabled" appearance="outline" style="width: 100px">
+                                            <mat-label>Cantidad</mat-label>
+                                            <input type="number" min="1" matInput placeholder="Cantidad" [(ngModel)]="producto.cantidad" required #piezas="ngModel" id="piezas" name="piezas" title="Piezas">
+                                            <span matSuffix class="matSuffixEmpty"></span>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="row"> 
+                                        <div class="col-sm-12 col-md-4 form-col">
+                                            <label id="example-radio-group-label">Modelo</label>
+                                            <mat-radio-group
+                                              aria-labelledby="example-radio-group-label"
+                                              class="example-radio-group"
+                                              [(ngModel)]="producto.genero" name="genero">
+                                              <mat-radio-button class="example-radio-button" value="1">Infantil</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="2">Dama</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="3">Caballero</mat-radio-button>
+                                            </mat-radio-group>                                    
+                                        </div>   
+                                        <div class="col-sm-12 col-md-5 form-col">
+                                            <label id="example-radio-group-label">Conjunto</label>
+                                            <mat-radio-group
+                                              aria-labelledby="example-radio-group-label"
+                                              class="example-radio-group"
+                                              [(ngModel)]="producto.tipo" name="tipo">
+                                              <mat-radio-button class="example-radio-button" value="1">Playera y pantalón</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="2">Playera y short</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="3">Camisón</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="4" *ngIf="identityUserService.isAdmin()">Sólo playera</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="5" *ngIf="identityUserService.isAdmin()">Sólo pantalón</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="6" *ngIf="identityUserService.isAdmin()">Sólo short</mat-radio-button>
+                                            </mat-radio-group>                                    
+                                        </div>    
+                                        <div class="col-sm-12 col-md-3 form-col">
+                                            <label id="example-radio-group-label">Talla</label>
+                                            <mat-radio-group
+                                              aria-labelledby="example-radio-group-label"
+                                              class="example-radio-group"
+                                              [(ngModel)]="producto.talla" name="talla">
+                                              <mat-radio-button class="example-radio-button" value="1" *ngIf="producto.genero=='1'">2/4</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="2" *ngIf="producto.genero=='1'">6/8</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="3" *ngIf="producto.genero=='1'">10/12</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="4" *ngIf="producto.genero=='2'">Unitalla</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="5" *ngIf="producto.genero=='2'">XL</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="6" *ngIf="producto.genero=='3'">28/32</mat-radio-button>
+                                              <mat-radio-button class="example-radio-button" value="7" *ngIf="producto.genero=='3'">34/36</mat-radio-button>
+                                            </mat-radio-group>                                    
+                                        </div>              
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 form-col">
+                                    <div class="form-group">
+                                        <mat-form-field class="input-disabled" appearance="outline" style="width: 100%">
+                                            <mat-label>Mayoreo</mat-label>
+                                            <input type="number" min="0" matInput placeholder="Mayoreo" [(ngModel)]="producto.mayoreo" required #mayoreo="ngModel" id="mayoreo" name="mayoreo" title="Mayoreo">
+                                            <span matSuffix class="matSuffixEmpty"></span>
+                                        </mat-form-field>
+                                    </div>
+                                </div>            
+                                <div class="col-sm-12 col-md-3 form-col">
+                                    <div class="form-group">
+                                        <mat-form-field class="input-disabled" appearance="outline" style="width: 100%">
+                                            <mat-label>Menudeo</mat-label>
+                                            <input type="number" min="0" matInput placeholder="Menudeo" [(ngModel)]="producto.menudeo" required #menudeo="ngModel" id="menudeo" name="menudeo" title="Menudeo">
+                                            <span matSuffix class="matSuffixEmpty"></span>
+                                        </mat-form-field>
+                                    </div>
+                                </div> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+    </mat-dialog-actions>
+</div>

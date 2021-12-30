@@ -12,7 +12,7 @@ import { EnviarMensajeComponent } from './enviar-mensaje/enviar-mensaje.componen
     ],
     declarations: [
         UsuariosComponent,
-        AgregarUsuarioComponent,
+        AgregarUsuarioComponent
     ],
     providers: [
     ],

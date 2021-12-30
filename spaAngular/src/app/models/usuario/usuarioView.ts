@@ -4,6 +4,8 @@ export class UsuarioView {
     user: string;
     nombre: string;
     casa: string;
+    casaNumero: number;
+    casaLetra: string;
     telefono: string;
     fechaIngreso: Date;
     imagen: string;

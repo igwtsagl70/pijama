@@ -13,6 +13,7 @@ export class SidebarAdminComponent implements OnInit {
       false,
       false,
       false,
+      false,
       false
   ];
 

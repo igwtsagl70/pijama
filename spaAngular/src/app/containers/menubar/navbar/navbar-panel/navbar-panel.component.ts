@@ -5,8 +5,7 @@ import { NavBarUsuarioService } from '../../../../utils/service/nav-bar-usuario.
 import { IdentityUserService } from '../../../../utils/IdentityUser/identity-user.service';
 import { IdentityUser } from '../../../../utils/IdentityUser/IdentityUser';
 import { DatosUsuario } from '../../../../models/usuario/datosUsuario';
-import { PerfilUsuarioComponent } from '../../../../components/perfil/perfil-usuario.component';
-import { ConfigCondominio } from 'src/app/models/configuracion/configCondominio';
+import { AgregarPedidoComponent } from 'src/app/components/carrito/agregar-pedido/agregar-pedido.component';
 
 @Component({
   selector: 'app-navbar-panel',
@@ -16,7 +15,6 @@ import { ConfigCondominio } from 'src/app/models/configuracion/configCondominio'
 export class NavbarPanelComponent implements OnInit {
     iUser: IdentityUser;
     dUser: DatosUsuario = new DatosUsuario('', '', '');
-    configCondominio: ConfigCondominio = new ConfigCondominio();
 
     /** navbar.admin ctor */
     constructor(
@@ -36,44 +34,35 @@ export class NavbarPanelComponent implements OnInit {
         this.iUser = this.identityUser.getIdentityUser();
         if (this.identityUser.getDatosUser() == null || this.identityUser.getDatosUser().nombre === 'NA')  {
             this.setDataUser();
-            this.setConfig();
           } else {
               this.dUser = this.identityUser.getDatosUser();
-              this.configCondominio = this.identityUser.getConfig();
           }
       }
 
     setDataUser() {
-        this.identityUser.getApiDataUser(this.identityUser.getUserUser()).subscribe(
-            user => {
-                if (user.success) {
-                    this.identityUser.createDatosUser(user.payload);
-                    this.dUser = user.payload;
-                } else  {alert('Error al cargar los datos de usuario');
-   }          }
-            , error => {
-                alert('Error al cargar los datos de usuario');
-            }
-        );
+        // this.identityUser.getApiDataUser(this.identityUser.getUserUser()).subscribe(
+        //     user => {
+        //         if (user.success) {
+        //             this.identityUser.createDatosUser(user.payload);
+        //             this.dUser = user.payload;
+        //         } 
+        //         else  {alert('Error al cargar los datos de usuario');}
+        //     }, error => {
+        //         alert('Error al cargar los datos de usuario');
+        //     }
+        // );
     }
 
-    setConfig() {
-      this.identityUser.getApiConfigCondominio(this.identityUser.getUserUser()).subscribe(
-          config => {
-              if (config.success) {
-                  this.identityUser.createConfig(config.payload);
-                  this.configCondominio = config.payload;
-              } else  {alert('Error al cargar los datos config'); }
-          }, error => {
-              alert('Error al cargar los datos config');
-          }
-      );
-  }
-
-    openPerfil(): void {
-        const dialogRef = this.dialog.open(PerfilUsuarioComponent, {
-            disableClose: false, width: '750px', autoFocus: false, data: {}
+    openCarrito(){
+        const dialogRef = this.dialog.open(AgregarPedidoComponent, {
+            disableClose: false, autoFocus: false, width: '1050px',  data: {isAgregar : true, _id: null}
         });
     }
+
+    // openPerfil(): void {
+    //     const dialogRef = this.dialog.open(PerfilUsuarioComponent, {
+    //         disableClose: false, width: '750px', autoFocus: false, data: {}
+    //     });
+    // }
 
   }

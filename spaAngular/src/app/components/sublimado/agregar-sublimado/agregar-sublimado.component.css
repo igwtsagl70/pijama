@@ -1,0 +1,15 @@
+table thead th {
+    font-family: 'montserrat' !important;
+    font-weight: bold !important;
+    font-size: 10px !important;
+    color: #fbfbfb !important;
+}
+
+table {
+    font-size: 10px !important;
+    text-align: center;
+}
+
+table td{
+    border: 1px solid #e3e3e3;
+}

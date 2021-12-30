@@ -19,7 +19,7 @@ export class ConstantsCatalogos {
             case 7: sMes = 'Agosto'; break;
             case 8: sMes = 'Septiembre'; break;
             case 9: sMes = 'Octubre'; break;
-            case 10: sMes = 'Noviemnbre'; break;
+            case 10: sMes = 'Noviembre'; break;
             case 11: sMes = 'Diciembre'; break;
         }
 
@@ -67,7 +67,7 @@ export class ConstantsCatalogos {
     }
 
     public static get EXT_IMG(): string[] {
-        return ['png', 'svg', 'jpg', 'jepg'];
+        return ['png', 'svg', 'jpg', 'jepg', 'jpeg'];
     }
 
     public static get EXT_FILE(): string[] {
@@ -76,6 +76,6 @@ export class ConstantsCatalogos {
 
     public static get PRINT_STYLE(): string {
         // tslint:disable-next-line: max-line-length
-        return '@font-face {    font-family: \'montserrat\';    src: url(\'../font/montserrat-medium.ttf\') format(\'truetype\');    font-weight: normal;    font-style: normal;}@font-face {    font-family: \'montserrat\';    src: url(\'../font/montserrat-semibold.ttf\') format(\'truetype\');    font-weight: 500;    font-style: normal}body { font-family: \'montserrat\', sans-serif !important;    position: relative;    color: #343944;}.main-header {    display: none !important;}.main-sidenav-menu {    display: none !important;}.header-main-outlet {    display: none !important;}.reporte-print {    margin-top: 25px;    position: relative;    display: block;    background: #fff;    padding: 10px;    border-radius: 5px;    box-shadow: 0px 1px 6px -1px #222;    width: 100%;}.titulo p{    font-size: 1.3rem;    color: #343a40;    margin: 0px;    margin-top: 10px;    margin-bottom: 10px;}.reporte-resultado {    font-size: 0.8rem;    color: #343a40;}.reporte-resultado table{    margin: 0 auto;    border-collapse: collapse;}.reporte-resultado thead{    border-bottom: 1px solid #bec5cb;}.reporte-resultado tbody{    position: relative;}.reporte-resultado tbody tr{    border-bottom: 1px solid #bec5cb;}.reporte-resultado tbody tr td{    padding-top: 10px;    padding: 3px;}.reporte-resultado tfoot tr{    border-top: 2px solid #bec5cb;}.reporte-resultado tfoot tr td{    font-size: 0.9rem;    font-weight: bold;    padding: 5px;}';
+        return '@font-face {    font-family: \'montserrat\';    src: url(\'../font/montserrat-medium.ttf\') format(\'truetype\');    font-weight: normal;    font-style: normal;}@font-face {    font-family: \'montserrat\';    src: url(\'../font/montserrat-semibold.ttf\') format(\'truetype\');    font-weight: 500;    font-style: normal}body { font-family: \'montserrat\', sans-serif !important;    position: relative;    color: #343944;}.main-header {    display: none !important;}.main-sidenav-menu {    display: none !important;}.header-main-outlet {    display: none !important;}.reporte-print {    margin-top: 25px;    position: relative;    display: block;    background: #fff;    padding: 10px;    border-radius: 5px;    box-shadow: 0px 1px 6px -1px #222;    width: 100%;}.titulo p{    font-size: 1.3rem;    color: #343a40;    margin: 0px;    margin-top: 10px;    margin-bottom: 10px;}.reporte-resultado {    font-size: 0.8rem;    color: #343a40;}.reporte-resultado table{    margin: 0 auto;    border-collapse: collapse;}.reporte-resultado thead{    border-bottom: 1px solid #bec5cb;}.reporte-resultado tbody{    position: relative;}.reporte-resultado tbody tr{    border-bottom: 1px solid #bec5cb;}.reporte-resultado tbody tr td{    padding-top: 10px;    padding: 3px;}.reporte-resultado tfoot tr{    border-top: 2px solid #bec5cb;}.reporte-resultado tfoot tr td{    font-size: 0.9rem;    font-weight: bold;    padding: 5px;} .col-titulo{display: inline-block;width: 350px;vertical-align: top;}';
     }
 }

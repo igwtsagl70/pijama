@@ -1,0 +1,72 @@
+<div class="">
+    <div mat-dialog-title class="mb-head">
+        <div class="close-section">
+            <a (click)="onNoClick()"><i class="material-icons">close</i></a>
+        </div>
+        <div class="title-section">
+                <h5>Seleccionar pedidos</h5>
+        </div>
+        <div class="options-section">
+            <button mat-button color="primary" class="main-botton" (click)="guardar()">
+                <i class="material-icons">done</i> Aceptar
+            </button>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 form-col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha de inicio</mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="Selecciona una fecha" name="fecha" [value]="fecha.value" [(ngModel)]="fechaInicio">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-3 form-col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha final</mat-label>
+                        <input matInput [matDatepicker]="picker2" placeholder="Selecciona una fecha" name="fecha2" [value]="fecha2.value" [(ngModel)]=" fechaFinal">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col col-12 col-sm-12 col-md-5 form-col">
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput [(ngModel)]="palabra" name="palabra" (keyup)="buscarPalabra($event.target.value)" placeholder="">
+                        <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col col-12 col-sm-12 col-md-1">
+                    <button mat-button (click)="buscar()"><mat-icon>refresh</mat-icon></button>
+                </div>
+            </div>              
+            <div class="row" *ngIf="documentos && documentos.length > 0">
+                <div class="col-12  col-sm-12 col-md-12 form-col">
+                    <mat-selection-list #shoes [(ngModel)]="seleccionados" name="shoes">
+                        <mat-list-option *ngFor="let documento of documentos" [value]="documento">                         
+                            <div mat-line>{{documento.folio}} - {{documento.user}}</div> 
+                            <div mat-line>{{documento.fecha | date: 'dd/MM/yyyy': '+0'}}</div>
+                        </mat-list-option>
+                      </mat-selection-list>                    
+                </div>
+            </div>
+            <div class="row" *ngIf="documentos == null || documentos.length == 0">
+                <div class="col-sm-12 col-md-12 form-col">
+                    <div class="search-instructions text-center">
+                        <p>Sin resultados, realice una nueva búsqueda.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 text-right paginado" *ngIf="documentos != null && documentos.length > 0">                 
+                <button mat-button (click)="anteriorPagina()" *ngIf="page != 0"> <mat-icon>arrow_back_ios</mat-icon></button>
+                <button mat-button (click)="siguientePagina()" *ngIf="documentos != null && documentos.length == 25"> <mat-icon>arrow_forward_ios</mat-icon></button>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+    </mat-dialog-actions>
+</div>

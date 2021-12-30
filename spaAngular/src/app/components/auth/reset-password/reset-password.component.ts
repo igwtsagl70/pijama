@@ -37,7 +37,7 @@ export class ResetPasswordComponent  implements OnInit {
 
   }
 
-  onSubmit(form: FormControl) {
+  onSubmit(form: any) {
       this.submitted = true;
       if (form.valid) {
           this.authService.reset(this.correo)

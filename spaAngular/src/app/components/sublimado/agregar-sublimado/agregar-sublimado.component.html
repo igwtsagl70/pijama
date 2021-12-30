@@ -1,0 +1,77 @@
+<div class="">
+    <div mat-dialog-title class="mb-head">
+        <div class="close-section">
+            <a (click)="onNoClick()"><i class="material-icons">close</i></a>
+        </div>
+        <div class="title-section">
+                <h5>Sublimado</h5>
+        </div>
+        <div class="options-section">
+            <button mat-button color="primary" class="main-botton" (click)="guardar()"  *ngIf="isAgregar">
+                <i class="material-icons">save</i> Guardar
+            </button>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <div class="container">
+            <div class="row">
+                <div class="col-12  col-sm-12 col-md-12 form-col" *ngIf="sublimado != null && sublimado.sublimadoModelo != null">
+                    <table>
+                        <thead>
+                            <th colspan="2">Modelo</th>
+                            <th>Pantalón Grande Hombre</th>
+                            <th>Pantalón Mediano Hombre</th>
+                            <th>Pantalón XL Mujer</th>
+                            <th>Pantalón MU Mujer</th>
+                            <th>Pantalón Niño</th>
+                            <th>Short Mujer</th>
+                            <th>Short Hombre</th>
+                            <th>Short Niño</th>
+                            <th>Camisón</th>
+                            <th>Playera Grande Hombre</th>
+                            <th>Playera Mediano Hombre</th>
+                            <th>Playera XL Mujer</th>
+                            <th>Playera MU Mujer</th>
+                            <th>Playera Niño 12</th>
+                            <th>Playera Niño 8</th>
+                            <th>Playera Niño 4</th>                    
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let modelo of sublimado.sublimadoModelo; let i = index">
+                                <td colspan="2">{{modelo.modelo}}</td>    
+                                <td>{{modelo.pantalonHG}}</td>
+                                <td>{{modelo.pantalonHM}}</td>
+                                <td>{{modelo.pantalonMXL}}</td>
+                                <td>{{modelo.pantalonMU}}</td>
+                                <td>{{modelo.pantalonN}}</td>
+                                <td>{{modelo.shortM}}</td>
+                                <td>{{modelo.shortH}}</td>
+                                <td>{{modelo.shortN}}</td>
+                                <td>{{modelo.camison}}</td>
+                                <td>{{modelo.playeraHG}}</td>
+                                <td>{{modelo.playeraHM}}</td>
+                                <td>{{modelo.playeraMXL}}</td>
+                                <td>{{modelo.playeraMU}}</td>
+                                <td>{{modelo.playeraN12}}</td>
+                                <td>{{modelo.playeraN8}}</td>
+                                <td>{{modelo.playeraN4}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions style="float: right;">
+      <div class="row ">
+        <div class="col-sm-12 col-md-12">
+          <p class="comprobante-totales">
+            <span class="color-subtext"><b class="color-text">No. Modelos:</b> {{sublimado.nModelos }}</span>
+            <span class="color-subtext"><b class="color-text">No. Piezas:</b> {{sublimado.nPiezas }}</span>
+          </p>
+        </div>
+      </div>
+    </mat-dialog-actions>
+    
+</div>

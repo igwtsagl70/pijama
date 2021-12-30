@@ -1,0 +1,82 @@
+<div class="box-main box-main-outlet">
+    <div class="header-main-outlet">
+        <div class="container container-full">
+            <div class="row justify-content-between">
+                <div class="col col-12 col-sm-12 col-md-2 order-2 order-md-1 form-col">
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput [(ngModel)]="palabra" name="palabra" (keyup)="buscarPalabra($event.target.value)" placeholder="Buscar...">
+                        <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col col-12 col-sm-12 col-md-1 order-2 order-md-1 form-col" style="width: 100%; margin-top: 15px;">
+                    <mat-form-field>
+                        <mat-label>Ordenar por</mat-label>
+                        <mat-select [(ngModel)]="ordenar" name="ordenar"  required (selectionChange)="buscar();">
+                            <mat-option *ngFor="let tipo of tipos" [value]="tipo.key">{{tipo.value}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col col-12 col-sm-12 col-md-9 second-opcions-header order-1 order-md-2">
+                    <button mat-button (click)="openAgregar()" *ngIf="identityUserService.isAdmin()"><mat-icon>add</mat-icon> Producto</button>
+                    <button mat-button (click)="buscar()"><mat-icon>refresh</mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body-main-outlet">
+        <div class="container container-full">
+            <div class="row">
+                <div *ngFor="let documento of documentos; let i = index" class="col-12  col-sm-4 col-md-2 form-col">
+                    <mat-card class="example-card">
+                        <mat-card-header>
+                          <mat-card-title>{{documento.nombre}}</mat-card-title>
+                        </mat-card-header>
+                        <div class="producto-imagen">
+                            <div  class="producto-imagen-backgroud" [ngStyle]="{'background-image': getImg(documento)}" *ngIf="documento.imagenes != null && documento.imagenes.length > 0"></div>                            
+                            <img src="../../../../assets/media/fondo_img.svg" alt="" style="height: 150px;" *ngIf="documento.imagenes == null || documento.imagenes.length == 0">                            
+                        </div>
+                        <!-- <span class="material-icons-outlined producto-imagen-siguiente" *ngIf="documento.imagenes != null && documento.imagenes.length > 1">arrow_forward_ios</span> -->
+                        <mat-card-content>
+                            <span class="producto-precio">Mayoreo: {{documento.mayoreo | currency}}</span>
+                            <span class="producto-precio">Menudeo: {{documento.menudeo | currency}}</span>
+                        </mat-card-content>
+                        <mat-card-actions class="actions-producto">
+                          <button mat-button (click)="openAgregarAlCarrito(documento)">Agregar</button>
+                          <button mat-button [matMenuTriggerFor]="menu" *ngIf="identityUserService.isAdmin()"> <mat-icon>more_vert</mat-icon></button>
+                          <mat-menu #menu="matMenu">
+                              <button mat-menu-item  (click)="openEditar(documento)">
+                                  <mat-icon>edit</mat-icon>
+                                  <span>Editar</span>
+                              </button>
+                              <button mat-menu-item  (click)="openImagenes(documento)">
+                                  <mat-icon>collections</mat-icon>
+                                  <span>Imagenes</span>
+                              </button>
+                              <button mat-menu-item  (click)="openAgregarImagen(documento)">
+                                  <mat-icon>add_a_photo</mat-icon>
+                                  <span>Agregar imágen</span>
+                              </button>
+                              <button mat-menu-item  (click)="eliminar(documento)">
+                                  <mat-icon>delete</mat-icon>
+                                  <span>Eliminar</span>
+                              </button>
+                          </mat-menu>
+                        </mat-card-actions>
+                      </mat-card>
+                </div>
+                <div class="col-sm-12 col-md-12 form-col">                             
+                  <div class="search-instructions text-center" *ngIf="documentos == null || documentos.length == 0">
+                      <p>Sin resultados, realice una nueva búsqueda.</p>
+                  </div>
+                </div>
+                <div class="col-sm-12 text-right paginado" *ngIf="documentos != null && documentos.length > 0">                 
+                    <button mat-button (click)="anteriorPagina()" *ngIf="page != 0"><mat-icon>arrow_back_ios</mat-icon> Anterior</button>
+                    <button mat-button (click)="siguientePagina()" *ngIf="documentos != null && documentos.length == 25">Siguiente <mat-icon>arrow_forward_ios</mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

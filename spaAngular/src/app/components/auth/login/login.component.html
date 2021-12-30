@@ -3,40 +3,45 @@
     </div>
     <div class="login-box container">
         <div class="row justify-content-md-center">
-            <div class="text-center login-main-box">
-                <div class="login-logo">
-                    <a href="./"><img src="../../../../assets/media/logo.svg" alt="Bookkeep" /></a>
-                </div>
-                <br />
-                <form (ngSubmit)="onSubmit(loginForm)" novalidate #loginForm="ngForm">
-                    <div class="form-group">
-                        <mat-form-field appearance="legacy" style="width: 90%;">
-                            <mat-label>Correo electrónico</mat-label>
-                            <input type="text" matInput required email [(ngModel)]="loginFormModel.email" #email="ngModel" id="email" name="email">                            
-                            <span matPrefix><i class="far fa-user icon" ></i></span>
-                            <span matSuffix matTooltip="Campo en formato de correo electrónico (usuario@dominio.com)" class="input-help-icon"><i class="fa fa-info-circle"></i></span>
-                        </mat-form-field>
+            <div class="col-sm-12 col-md-7">
+                <div class="text-center login-main-box">
+                    <div class="login-logo">
+                        <a href="./" style="cursor: auto;"><img src="../../../../assets/media/logo.jpeg" alt="anja" /></a>
                     </div>
-                    <div class="form-group">
-                        <mat-form-field appearance="legacy" style="width: 90%;">
-                            <mat-label>Contraseña</mat-label>
-                            <input [type]="hide ? 'password' : 'text'" matInput required  minlength="5" [(ngModel)]="loginFormModel.password" #password="ngModel" id="password" name="password">
-                            <span matPrefix><i class="icon fas fa-eye" [class.fa-eye-slash]="hide" (click)="hide = !hide"></i></span>
-                            <span matSuffix matTooltip="Longitud mínima: 5" class="input-help-icon"><i class="fa fa-info-circle"></i></span>
-                        </mat-form-field>
-                    </div>
-                    <div class="form-group">
-                        <div class="login-submit">
-                            <button type="submit" mat-raised-button color="primary" class="login-button" [disabled]="submitted"><i class="fas fa-circle-notch fa-spin button-loading" *ngIf="submitted"></i>Iniciar sesión</button>
+                    <br />
+                    <form (ngSubmit)="onSubmit(loginForm)" novalidate #loginForm="ngForm">
+                        <div class="form-group">
+                            <mat-form-field appearance="legacy" style="width: 350px">
+                                <mat-label>Usuario</mat-label>
+                                <input type="text" matInput required [(ngModel)]="loginFormModel.email" #email="ngModel" id="email" name="email">                            
+                                <span matPrefix><i class="far fa-user icon" ></i></span>
+                                <span matSuffix matTooltip="Puede ser correo" class="input-help-icon"><i class="fa fa-info-circle"></i></span>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group">
+                            <mat-form-field appearance="legacy" style="width: 350px;">
+                                <mat-label>Contraseña</mat-label>
+                                <input [type]="hide ? 'password' : 'text'" matInput required  minlength="5" [(ngModel)]="loginFormModel.password" #password="ngModel" id="password" name="password">
+                                <span matPrefix><i class="icon fas fa-eye" [class.fa-eye-slash]="hide" (click)="hide = !hide"></i></span>
+                                <span matSuffix matTooltip="Longitud mínima: 5" class="input-help-icon"><i class="fa fa-info-circle"></i></span>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group">
+                            <div class="login-submit">
+                                <button type="submit" mat-raised-button color="primary" class="login-button" [disabled]="submitted"><i class="fas fa-circle-notch fa-spin button-loading" *ngIf="submitted"></i>Iniciar sesión</button>
+                            </div>
+                        </div>
+                    </form>
+                    <br />
+                    <div class="login-box-footer">
+                        <div class="link-Prueba">
+                            <a [routerLink]="['/auth/registro']">Registrarse</a>
                         </div>
                     </div>
-                </form>
-                <br />
-                <div class="login-box-footer">
-                    <div class="login-olvide text-center">
-                        <a [routerLink]="['/auth/reset']">Olvidé mi contraseña</a>
-                    </div>
                 </div>
+            </div>
+            <div class="col-sm-12 col-md-5" style="text-align: center;">
+                <img src="../../../../assets/media/pasos.jpeg" alt="" style="width: 100%;text-align: center;">
             </div>
         </div>
     </div>

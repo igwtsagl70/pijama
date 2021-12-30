@@ -10,7 +10,6 @@ import { ApiResponse } from '../../models/shared/ApiResponse';
 import { ConstantsRoutes } from '../constants/ConstantsRoutes';
 import { catchError } from 'rxjs/operators';
 import { DatosUsuario } from 'src/app/models/Usuario/DatosUsuario';
-import { ConfigCondominio } from 'src/app/models/configuracion/configCondominio';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,7 +19,6 @@ const httpOptions = {
 export class IdentityUserService {
     private iUser: IdentityUser;
     private dUser: DatosUsuario;
-    private configCondominio: ConfigCondominio;
     public openSidebar: boolean;
     baseUrl = '';
 
@@ -60,20 +58,6 @@ export class IdentityUserService {
             );
     }
 
-    // Obtiene datos del usuario de la API con el Token del usuario
-    public getApiConfigCondominio(UserName: string): Observable<ApiResponse<ConfigCondominio>> {
-        const BearerToken = localStorage.getItem('token');
-        httpOptions.headers = httpOptions.headers.set('x-access-token', BearerToken);
-
-        return this.http.post<ApiResponse<ConfigCondominio>>(
-            this.baseUrl + ConstantsRoutes.CONFIG_CONDOMINIO,
-            { UserName },
-            httpOptions
-        ).pipe(
-            catchError(this.errorService.handleError)
-        );
-    }
-
     // Crea IdentityUser con un objeto TokenDecode
     createIdentityUser(token: TokenDecode): boolean {
         if (token != null && token.userId !== 'NA') {
@@ -110,11 +94,15 @@ export class IdentityUserService {
         return this.iUser != null ? this.iUser.user : '';
     }
 
+    isAdmin(): boolean {
+        return this.iUser.tipo == "admin" ? true : false; 
+    }
+
     /**
      * Limpia el objeto dUser
      */
     resetDatosUser(): boolean {
-        this.dUser = new DatosUsuario('NA', '', '');
+        this.dUser = new DatosUsuario('NA', '', '', 0, '');
         if (this.dUser.nombre === 'NA') { return true; }
         return false;
     }
@@ -141,29 +129,6 @@ export class IdentityUserService {
 
     setCasa(casa: string) {
         if (this.dUser != null) { this.dUser.casa = casa; }
-    }
-
-    /**
-     * Crea Config con un objeto config
-     */
-    createConfig(config: ConfigCondominio) {
-        this.configCondominio = config;
-    }
-
-    getConfig(): ConfigCondominio {
-        return this.configCondominio;
-    }
-
-    setConfigNombre(nombre: string) {
-        this.configCondominio.nombre = nombre;
-    }
-
-    setConfigCuota(cuota: number) {
-        if (this.configCondominio != null) { this.configCondominio.cuotaMensual = cuota; }
-    }
-
-    setConfigOtroCuota(cuota: number) {
-        if (this.configCondominio != null) { this.configCondominio.otroCuotaMensual = cuota; }
     }
 
 }

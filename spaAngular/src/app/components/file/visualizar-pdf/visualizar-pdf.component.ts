@@ -22,7 +22,7 @@ export class VisualizarPdfComponent implements OnInit {
         private toastr: ToastrService,
         private identityUserService: IdentityUserService,
         private loadingService: LoadingService,
-        private _DomSanitizationService: DomSanitizer,
+        public _DomSanitizationService: DomSanitizer,
         private fileService: FileUtilitiesService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<VisualizarPdfComponent>,

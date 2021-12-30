@@ -6,7 +6,8 @@ dotenv.config();
 
 sendGrid.sendMailBienvenida = async(user, empresa, link ) => {
     try{
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        //sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        sgMail.setApiKey('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');
         const msg = {
           to: user,
           from: 'support@ccondominium.com.mx',
@@ -26,7 +27,8 @@ sendGrid.sendMailBienvenida = async(user, empresa, link ) => {
 
 sendGrid.sendMailResetPass = async(user, pass, link ) => {
     try{
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        //sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        sgMail.setApiKey('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');
         const msg = {
           to: user,
           from: 'support@ccondominium.com.mx',
@@ -46,7 +48,10 @@ sendGrid.sendMailResetPass = async(user, pass, link ) => {
 
 sendGrid.sendMailMensaje = async(user, mensaje, link ) => {
     try{
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        console.log('sendGrid');
+        console.log(process.env.SENDGRID_API_KEY);
+        //sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        sgMail.setApiKey('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');
         const msg = {
           to: user,
           from: 'support@ccondominium.com.mx',
@@ -66,16 +71,41 @@ sendGrid.sendMailMensaje = async(user, mensaje, link ) => {
 
 sendGrid.sendMailAviso = async(users, mensaje, link ) => {
     try{
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        //sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        sgMail.setApiKey('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');
         var aUsers = new Array();
-        users.forEach(u => abUsers.push(u.user));
+        users.forEach(u => aUsers.push(u.user));
         const msg = {
           to: aUsers,
           from: 'support@ccondominium.com.mx',
-          templateId: 'd-0ff2eb693ac9428d8e585f4e77674d00',
+          templateId: 'd-a54e68012303473f9014f193825f5bb9',
           dynamic_template_data: {
             user: 'Residente',
             mensaje: mensaje,
+            link: link}
+        };
+        var ss = await sgMail.sendMultiple(msg);
+        if(ss != null) return true;
+    }catch(e){
+        return false;
+    }
+    return false;
+}
+
+sendGrid.sendMailEvento = async(users, fecha, evento, link ) => {
+    try{
+        //sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        sgMail.setApiKey('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');
+        var aUsers = new Array();
+        users.forEach(u => aUsers.push(u.user));
+        const msg = {
+          to: aUsers,
+          from: 'support@ccondominium.com.mx',
+          templateId: 'd-f0f16ff4e207435b9c0ce8132c0dcfe3',
+          dynamic_template_data: {
+            user: 'Residente',
+            fecha: fecha,
+            evento: evento,
             link: link}
         };
         var ss = await sgMail.sendMultiple(msg);

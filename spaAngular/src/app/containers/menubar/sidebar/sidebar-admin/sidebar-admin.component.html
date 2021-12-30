@@ -1,162 +1,19 @@
 <div class="sidebar-menu show" [class.menuHide]="isOpen">
         <ul>
-            <li routerLinkActive="menuActive" [routerLink]="['./','panel']" >    
+            <li routerLinkActive="menuActive" [routerLink]="['./','productos']" >    
                 <a>
-                    <i class="material-icons">dashboard</i>Panel
+                    <i class="material-icons-outlined">sell</i>Productos
                 </a>    
             </li>    
-            <li (click)="open(0)">    
+            <li routerLinkActive="menuActive" [routerLink]="['./','pedidos']" >    
                 <a>    
-                    <i class="material-icons">people</i>Usuarios 
+                    <i class="material-icons-outlined">assignment</i>Pedidos
                 </a>    
-            </li>    
-            <li (click)="open(1)">    
-                <a>    
-                    <i class="material-icons">account_balance_wallet</i>Cuotas    
+            </li>  
+            <li routerLinkActive="menuActive" [routerLink]="['./','sublimados']" >    
+                <a>
+                    <i class="material-icons-outlined">iron</i>Sublimado
                 </a>    
-            </li>    
-            <li (click)="open(2)">    
-                <a>    
-                    <i class="material-icons">pie_chart</i>Gastos    
-                </a>    
-            </li>    
-            <li routerLinkActive="menuActive" [routerLink]="['./','reporte']">    
-                <a>    
-                    <i class="material-icons">book</i>Reporte    
-                </a>    
-            </li>
-            <li routerLinkActive="menuActive" [routerLink]="['./','agenda']">    
-                <a>    
-                    <i class="material-icons">event</i>Agenda    
-                </a>    
-            </li>    
-            <li (click)="open(3)">    
-                <a>    
-                    <i class="material-icons">assignment</i>Cumplimiento    
-                </a>    
-            </li>    
-            <li class="li-hr">    
-                <hr />    
-            </li>        
-            <li (click)="open(4)">    
-                <a>    
-                    <i class="material-icons">house</i>Condominio    
-                </a>    
-            </li>        
+            </li>      
         </ul>    
     </div>    
-
-    <div class="sidebar-menu-sec" [class.menuSecShow]="isOpen">
-        <!--MENU SECUNDARIO USUARIOS-->
-        <div class="element" [class.elementShow]="isSelected[0]">
-            <span>
-                <i class="material-icons">people</i> 
-                <span style="vertical-align: super;padding-left: 15px">Usuarios</span>  
-                <i class="material-icons back" (click)="close(0)">arrow_back</i>
-            </span>
-            <ul>
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','usuarios']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Consulta</a>    
-                </li>    
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','usuarios','layout']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Alta por layout</a>    
-                </li>    
-            </ul>    
-        </div>
-
-        <!--MENU SECUNDARIO CUOTAS-->
-        <div class="element" [class.elementShow]="isSelected[1]">
-            <span>
-                <i class="material-icons">account_balance_wallet</i> 
-                <span style="vertical-align: super;padding-left: 15px">Cuotas</span>  
-                <i class="material-icons back" (click)="close(1)">arrow_back</i>
-            </span>
-            <ul>
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','cuotas','lista']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Consulta</a>    
-                </li>    
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','cuotas','faltantes']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Lista faltantes</a>    
-                </li>    
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','cuotas','layout']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Alta por layout</a>    
-                </li>    
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','cuotas','tabla']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Alta por tabla</a>    
-                </li>   
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','cuotas','catalogo']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Catálogo</a>    
-                </li>   
-            </ul>    
-        </div>
-    
-        <!--MENU SECUNDARIO GASTOS-->
-        <div class="element" [class.elementShow]="isSelected[2]">
-            <span>
-                <i class="material-icons">pie_chart</i> 
-                <span style="vertical-align: super;padding-left: 15px">Gastos</span>  
-                <i class="material-icons back" (click)="close(2)">arrow_back</i>
-            </span>
-            <ul>
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','gastos','lista']">    
-                <i class="fas fa-caret-right submenu-icon"></i><a>Consulta</a>    
-                </li> 
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','gastos','catalogo']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Catálogo</a>    
-                </li>   
-            </ul>    
-        </div>
-        <!--MENU SECUNDARIO CUMPLIMIENTO-->
-        <div class="element" [class.elementShow]="isSelected[3]">
-            <span>
-                <i class="material-icons">assignment</i> 
-                <span style="vertical-align: super;padding-left: 15px">Cumplimiento</span>  
-                <i class="material-icons back" (click)="close(3)">arrow_back</i>
-            </span>
-            <ul>
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','cumplimiento', 'lista']">    
-                <i class="fas fa-caret-right submenu-icon"></i><a>Consulta</a>    
-                </li> 
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','cumplimiento','catalogo']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Normas</a>    
-                </li>   
-            </ul>    
-        </div>
-        <!--MENU SECUNDARIO DATOS GENERALES-->
-        <div class="element" [class.elementShow]="isSelected[4]">
-            <span>
-                <i class="material-icons">house</i> 
-                <span style="vertical-align: super;padding-left: 15px">Condominio</span>  
-                <i class="material-icons back" (click)="close(4)">arrow_back</i>
-            </span>
-            <ul>
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','condominio','configuracion']">    
-                <i class="fas fa-caret-right submenu-icon"></i><a>Configuración</a>    
-                </li> 
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','condominio','mensajes']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Mensajes</a>    
-                </li>   
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','condominio','avisos']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Avisos</a>    
-                </li> 
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','condominio','cuenta']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Estados de cuenta</a>    
-                </li> 
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','condominio','minutas']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Minutas</a>    
-                </li> 
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','condominio','galeria']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Galeria</a>    
-                </li> 
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','condominio','reglamento']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Reglamento</a>    
-                </li> 
-                <li routerLinkActive="menuSecActive" [routerLink]="['./','condominio','bitacora']">    
-                    <i class="fas fa-caret-right submenu-icon"></i><a>Bitacora</a>    
-                </li> 
-            </ul>    
-        </div>
-    
-    
-    </div>
-    
