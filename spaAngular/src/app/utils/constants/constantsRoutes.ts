@@ -3,7 +3,7 @@ export class ConstantsRoutes {
     public static get ANGULAR_LOGIN(): string { return '/auth/login'; }
     public static get ANGULAR_REGISTRO(): string { return '/auth/registro'; }
     public static get ANGULAR_RESET(): string { return '/auth/reset'; }
-    public static get ANGULAR_INICIO(): string { return '/inicio/productos'; }
+    public static get ANGULAR_INICIO(): string { return '/inicio/usuario'; }
     public static get ANGULAR_ADMIN(): string { return '/admin/productos'; }
 
     /* API ROUTES*/
@@ -28,16 +28,26 @@ export class ConstantsRoutes {
 
     /* API PEDIDOS*/
     public static get PEDIDOS(): string { return '/api/pedido/list'; }
-    public static get PEDIDOS_PARA_SUBLIMAR(): string { return '/api/pedido/sublimar'; }
+    public static get PEDIDOS_PARA_SUBLIMAR(): string { return '/api/pedido/sublimado'; }
     public static get PEDIDO_GET(): string { return '/api/pedido'; }
     public static get PEDIDO_AGREGAR(): string { return '/api/pedido'; }
     public static get PEDIDO_EDITAR(): string { return '/api/pedido'; }
     public static get PEDIDO_ELIMINAR(): string { return '/api/pedido'; }
-
+    public static get PEDIDO_CONFIRMAR(): string { return '/api/pedido/confirmar'; }
+    public static get PEDIDOS_USUARIO(): string { return '/api/pedido/usuario/list'; }
+    public static get PEDIDO_PDF(): string { return '/api/pedido/pdf'; }
     /* API SUBLIMADOS*/
     public static get SUBLIMADOS(): string { return '/api/sublimado/list'; }
     public static get SUBLIMADO_GET(): string { return '/api/sublimado'; }
+    public static get SUBLIMADO_PEDIDOS(): string { return '/api/sublimado/pedidos'; }
     public static get SUBLIMADO_AGREGAR(): string { return '/api/sublimado'; }
     public static get SUBLIMADO_EDITAR(): string { return '/api/sublimado'; }
-    public static get SUBLIMADO_ELIMINAR(): string { return '/api/sublimado'; }
+    public static get SUBLIMADO_ELIMINAR(): string { return '/api/sublimado/cancelar'; }
+    public static get SUBLIMADO_CONFIRMADO_TERMINADO(): string { return '/api/sublimado/confirmar/terminar'; }
+    public static get SUBLIMADO_GET_PDF(): string { return '/api/sublimado/pdf'; }
+    public static get SUBLIMADO_GET_PLAYERA_PDF(): string { return '/api/sublimado/playera/pdf'; }
+
+ /* API USUARIOS*/
+ public static get USUARIOS(): string { return '/api/usuario/list'; }
+ public static get USUARIOS_CANCELAR(): string { return '/api/usuario'; }
 }

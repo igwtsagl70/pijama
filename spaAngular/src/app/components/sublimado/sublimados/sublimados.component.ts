@@ -16,6 +16,7 @@ import { SublimadosService } from '../sublimados.service';
 import { SublimadoSimpleView } from 'src/app/models/sublimado/sublimadoSimpleView';
 import { AsignarPedidoComponent } from '../asignar-pedido/asignar-pedido.component';
 import { AgregarSublimadoComponent } from '../agregar-sublimado/agregar-sublimado.component';
+import { VisualizarPdfComponent } from '../../file/visualizar-pdf/visualizar-pdf.component';
 
 @Component({
   selector: 'app-sublimados',
@@ -103,13 +104,43 @@ export class SublimadosComponent implements OnInit {
   
     openAgregarSublimado(pedidos: PedidoView[]): void {
       const dialogRef = this.dialog.open(AgregarSublimadoComponent, {
-        disableClose: false, autoFocus: false, width: '1250px',  data: {pedidos: pedidos}
+        disableClose: false, autoFocus: false, width: '1250px',  data: {isAgregar: true, pedidos: pedidos}
       });
   
       dialogRef.afterClosed().subscribe(result => {
         if (result) { this.buscar(); }
       });
     }
+
+    openEditarSublimado(pedidos: PedidoView[], ): void {
+      const dialogRef = this.dialog.open(AgregarSublimadoComponent, {
+        disableClose: false, autoFocus: false, width: '1250px',  data: {isAgregar: false, pedidos: pedidos, }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) { this.buscar(); }
+      });
+    }
+
+     // alert("ya está en sublimado pedidos");
+     buscarSublimado(sublimado: SublimadoSimpleView){
+        this.loadingService.show();
+        this.sublimadoService.getSublimadoPedidos(sublimado._id)
+            .subscribe(
+            res => {
+                this.loadingService.hide();
+                if (res.success) { 
+                  
+                   alert(" Se encontró el sublimado " + res.payload._id)
+                  
+                            } 
+                else { this.toastr.error('No se obtuvieron pedidos del sublimado', 'Error'); }
+                }, error => {
+                  this.loadingService.hide();
+                  this.toastr.error(error);
+                }
+            );
+      }
   
     siguientePagina(){
       this.page += 1;
@@ -118,9 +149,126 @@ export class SublimadosComponent implements OnInit {
 
     anteriorPagina(){
       this.page -= 1;
-      if(this.page < 0) this.page = 0;
+      if(this.page < 0) this.page = 0; 
       this.buscar();
     }
 
+    confirmarTerminar(documento: SublimadoSimpleView, operacion: string) {
+      // tslint:disable-next-line: one-variable-per-declaration
+      var op = operacion == "3" ? "Confirmado" : "Terminado";
+      const confirmacion = confirm('Seguro de cambiar el estado de sublimado: a ' + op);
+      if (confirmacion) {
+        var op = operacion == "3" ? "Confirmado" : "Terminado";
+        documento.estado = operacion;
+        this.loadingService.show();
+        this.sublimadoService.confirmarTerminarSublimado(documento._id, documento).subscribe(
+        registro => {
+            this.loadingService.hide();
+            this.toastr.success('', 'Sublimado ' + op);
+            this.buscar();
+            }, error => {
+                this.loadingService.hide();
+                this.toastr.error(error);
+            }, () => {
+            //    this.loadingService.hide();
+             //   this.toastr.error('', 'Otro Error');
+            }
+          );
+      }
+    }
 
+    cancelar(documento: SublimadoSimpleView, operacion: string) {
+      // tslint:disable-next-line: one-variable-per-declaration
+      const confirmacion = confirm('Seguro de cancelar el estado de sublimado');
+      if (confirmacion) {
+        
+        documento.estado = operacion;
+        this.loadingService.show();
+        this.sublimadoService.deleteSublimado(documento._id).subscribe(
+        registro => {
+            this.loadingService.hide();
+            this.toastr.success('', 'Sublimado cancelado : ' + registro.payload);
+            this.buscar();
+            }, error => {
+                this.loadingService.hide();
+                this.toastr.error(error);
+            }, () => {
+            //    this.loadingService.hide();
+             //   this.toastr.error('', 'Otro Error');
+            }
+          );
+      }
+    }
+
+    getPdf(documento: SublimadoSimpleView, tipo: string) {
+      // tslint:disable-next-line: one-variable-per-declaration
+      var tipop="";
+      if (tipo == "1") tipop="Pantalón";
+      else tipop = "Playera"; 
+      const confirmacion = confirm('Seguro de crear el  pdf del sublimado del tipo : ' + tipop );
+      if (confirmacion) {
+        this.loadingService.show();
+        this.sublimadoService.getSublimadosPdf(documento, documento._id,tipo).subscribe(
+        registro => {
+            this.loadingService.hide();
+            this.toastr.success('', 'Pedido pdf obtenido');
+            
+            var data = registro.payload;
+          //  alert("pdf lengt  " + data.length);
+           
+      
+           this.openVisualizar(data);
+
+            }, error => {
+                this.loadingService.hide();
+                this.toastr.error(error);
+            }, () => {
+       // this.loadingService.hide();
+        //      this.toastr.error('', 'Otro Error');
+            }
+          );
+      }
+    }
+    
+    getPlayeraPdf(documento: SublimadoSimpleView, tipo: string) {
+      // tslint:disable-next-line: one-variable-per-declaration
+      var tipop="";
+      if (tipo == "1") tipop="Pantalón";
+      else tipop = "Playera"; 
+      const confirmacion = confirm('Seguro de crear el  pdf del sublimado del tipo : ' + tipop );
+      if (confirmacion) {
+        this.loadingService.show();
+        this.sublimadoService.getSublimadosPlayeraPdf(documento, documento._id,tipo).subscribe(
+        registro => {
+            this.loadingService.hide();
+            this.toastr.success('', 'Pedido pdf obtenido');
+            
+            var data = registro.payload;
+          //  alert("pdf lengt  " + data.length);
+           
+      
+           this.openVisualizar(data);
+
+            }, error => {
+                this.loadingService.hide();
+                this.toastr.error(error);
+            }, () => {
+       // this.loadingService.hide();
+        //      this.toastr.error('', 'Otro Error');
+            }
+          );
+      }
+    }
+
+    openVisualizar(s64: string) {
+      let dialogRef = this.dialog.open(VisualizarPdfComponent, {
+          disableClose: true, autoFocus: false, data: { url: "", s64: s64 }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+              //this.busquedaActualizar();
+          }
+      });
+  }
 }

@@ -13,12 +13,14 @@ import { EditarProductoComponent } from '../../carrito/editar-producto/editar-pr
 import { PedidosService } from '../pedido.service';
 import { PedidoSimpleView } from 'src/app/models/pedido/pedidoSimpleView';
 import { AgregarPedidoComponent } from '../../carrito/agregar-pedido/agregar-pedido.component';
+import { FileUtilitiesService } from 'src/app/utils/service/file-utilities.service';
+import { VisualizarPdfComponent } from '../../file/visualizar-pdf/visualizar-pdf.component';
 
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.component.html',
   styleUrls: ['./pedidos.component.css'],
-  providers: [PedidosService],
+  providers: [PedidosService,FileUtilitiesService],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -40,6 +42,7 @@ export class PedidosComponent implements OnInit {
     private identityUserService: IdentityUserService,
     private pedidoService: PedidosService,
     private loadingService: LoadingService,
+    private fileService: FileUtilitiesService,
     private toastr: ToastrService,
     private configService: ConfigService,
     public dialog: MatDialog,) { }
@@ -128,5 +131,87 @@ export class PedidosComponent implements OnInit {
       return this.configService.getApiURI() + '/' + documento.imagenes[0].url;
     }
 
+    
+    eliminar(documento: PedidoSimpleView) {
+      // tslint:disable-next-line: one-variable-per-declaration
+      const confirmacion = confirm('Seguro de eliminar el pedido');
+      if (confirmacion) {
+        this.loadingService.show();
+        this.pedidoService.deletePedido(documento._id).subscribe(
+        registro => {
+            this.loadingService.hide();
+            this.toastr.success('', 'Pedido eliminado');
+            this.buscar();
+            }, error => {
+                this.loadingService.hide();
+                this.toastr.error(error);
+            }, () => {
+                this.loadingService.hide();
+                this.toastr.error('', 'Otro Error');
+            }
+          );
+      }
+    }
+
+    confirmar(documento: PedidoSimpleView) {
+      // tslint:disable-next-line: one-variable-per-declaration
+      const confirmacion = confirm('Seguro de confirmar el pedido');
+      if (confirmacion) {
+        this.loadingService.show();
+        this.pedidoService.confirmarPedido(documento._id, documento).subscribe(
+        registro => {
+            this.loadingService.hide();
+            this.toastr.success('', 'Pedido confirmado');
+            this.buscar();
+            }, error => {
+                this.loadingService.hide();
+                this.toastr.error(error);
+            }, () => {
+        //this.loadingService.hide();
+          //              this.toastr.error('', 'Otro Error');
+            }
+          );
+      }
+    }
+
+    crearPdf(documento: PedidoSimpleView) {
+      // tslint:disable-next-line: one-variable-per-declaration
+      const confirmacion = confirm('Seguro de crear el  pdf del pedido');
+      if (confirmacion) {
+        this.loadingService.show();
+        this.pedidoService.obtenerPdfPedido(documento._id).subscribe(
+        registro => {
+            this.loadingService.hide();
+            this.toastr.success('', 'Pedido pdf obtenido');
+            
+            var data = registro.payload;
+          //  alert("pdf lengt  " + data.length);
+           
+      
+           this.openVisualizar(data);
+
+            }, error => {
+                this.loadingService.hide();
+                this.toastr.error(error);
+            }, () => {
+       // this.loadingService.hide();
+        //      this.toastr.error('', 'Otro Error');
+            }
+          );
+      }
+    }
+    
+
+    openVisualizar(s64: string) {
+      let dialogRef = this.dialog.open(VisualizarPdfComponent, {
+          disableClose: true, autoFocus: false, data: { url: "", s64: s64 }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+              //this.busquedaActualizar();
+          }
+      });
+  }
 
 }

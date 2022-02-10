@@ -18,12 +18,17 @@ export class UsuarioService {
   constructor(private apiClient: ApiClientService) {
   }
 
-  getUsuarios(faltantes: string): Observable<ApiResponse<UsuarioView[]>> {
+  getUsuarios(palabra: string, page: number, orden: string): Observable<ApiResponse<UsuarioView[]>> {
     let params = new HttpParams();
-    params = params.set('faltantes', faltantes);
-    return this.apiClient.apiGetParam<UsuarioView[]>(ConstantsRoutes.LOGIN, params);
-  }
+    params = params.set('palabra', palabra);
 
+    params = params.set('page', page.toString());
+    params = params.set('orden', orden);
+    return this.apiClient.apiGetParam<UsuarioView[]>(ConstantsRoutes.USUARIOS, params);
+  }
+  deleteUsuario(id: string): Observable<ApiResponse<string>> {
+    return this.apiClient.apiDelete<string>(ConstantsRoutes.USUARIOS_CANCELAR + `/${id}`);
+  }
   getUsuariosCasa(casa: string): Observable<ApiResponse<UsuarioView[]>> {
     let params = new HttpParams();
     params = params.set('casa', casa);
@@ -43,9 +48,7 @@ export class UsuarioService {
   }
 
    // tslint:disable-next-line: variable-name
-  deleteUsuario(id: string): Observable<ApiResponse<string>> {
-    return this.apiClient.apiDelete<string>(ConstantsRoutes.LOGIN + `/${id}`);
-  }
+ 
 
   cambioEstadoUsuario(usuario: UsuarioCambioEstado): Observable<ApiResponse<string>> {
     return this.apiClient.apiPost<string, UsuarioCambioEstado>(ConstantsRoutes.LOGIN, usuario);

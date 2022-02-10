@@ -84,6 +84,7 @@ export class AgregarProductoComponent implements OnInit {
   editar(form: any) {
     this.loadingService.show();
     if (form.valid) {
+    
         this.productosService.putProducto(this.producto)
             .subscribe(
             registro => {

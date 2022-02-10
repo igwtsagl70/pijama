@@ -48,6 +48,7 @@
                             <th>Total</th>
                             <th>Sublimado</th>
                             <th>Estado</th>
+                            
                             <th></th>                          
                         </thead>
                         <tbody>
@@ -64,6 +65,8 @@
                                 <td *ngIf="documento.estado == '2'">Cancelado</td>
                                 <td *ngIf="documento.estado == '3'">Confirmado</td>
                                 <td *ngIf="documento.estado == '4'">Terminado</td>
+                               
+                              
                                 <td>
                                     <button mat-button [matMenuTriggerFor]="menu"> <mat-icon>more_vert</mat-icon></button>
                                     <mat-menu #menu="matMenu">
@@ -74,6 +77,14 @@
                                         <button mat-menu-item  (click)="eliminar(documento)">
                                             <mat-icon>delete</mat-icon>
                                             <span>Cancelar</span>
+                                        </button>
+                                        <button mat-menu-item  (click)="confirmar(documento)">
+                                            <mat-icon>check</mat-icon>
+                                            <span>Confirmar</span>
+                                        </button>
+                                        <button mat-menu-item  (click)="crearPdf(documento)">
+                                            <mat-icon>picture_as_pdf</mat-icon>
+                                            <span>Obtener pdf</span>
                                         </button>
                                     </mat-menu>                                    
                                 </td>

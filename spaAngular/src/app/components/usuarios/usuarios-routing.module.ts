@@ -4,7 +4,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
     {
-        path: 'list',
+        path: '',
         component: UsuariosComponent,
         children: [
         ]

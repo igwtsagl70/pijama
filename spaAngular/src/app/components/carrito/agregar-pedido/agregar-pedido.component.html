@@ -47,7 +47,7 @@
                                     <p>Cantidad: {{producto.cantidad}}</p>
                                 </div>
                                 <div class="col-12  col-sm-4 col-md-1">
-                                    <button mat-button [matMenuTriggerFor]="menu" *ngIf="identityUserService.isAdmin()"> <mat-icon>more_vert</mat-icon></button>
+                                    <button mat-button [matMenuTriggerFor]="menu" > <mat-icon>more_vert</mat-icon></button>
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item  (click)="openEditarProducto(null, producto)">
                                             <mat-icon>edit</mat-icon>
@@ -58,7 +58,7 @@
                                             <span>Eliminar</span>
                                         </button>
                                     </mat-menu>
-                                    <button mat-menu-item *ngIf="!identityUserService.isAdmin()"  (click)="eliminarProducto(i)">
+                                    <button mat-menu-item   (click)="eliminarProducto(i)">
                                         <mat-icon>delete</mat-icon>
                                         <span>Eliminar</span>
                                     </button>

@@ -58,7 +58,8 @@ import { AsignarProductoComponent } from './components/carrito/asignar-producto/
     entryComponents: [
         AgregarPedidoComponent,
         EditarProductoComponent,
-        AsignarProductoComponent
+        AsignarProductoComponent,
+        VisualizarPdfComponent
     ]
 })
 

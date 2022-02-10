@@ -4,12 +4,15 @@ var VerifyToken  = require('../includes/verifyToken');
 var VerifyTokenAdmin  = require('../includes/verifyTokenAdmin');
 const usuarioCtrl = require('../controllers/usuario.controller');
 
+
+router.get('/list', VerifyToken, usuarioCtrl.getUsuarios);
+router.delete('/:id', VerifyTokenAdmin,usuarioCtrl.cancelar);
 // router.get('/list', VerifyTokenAdmin, usuarioCtrl.getUsuarios);
 // router.get('/casa', VerifyTokenAdmin, usuarioCtrl.getUsuariosCasa);
 // router.get('/:id', VerifyToken, usuarioCtrl.getUsuario);
 // router.post('/', VerifyTokenAdmin,usuarioCtrl.createUsuario);
 // router.put('/:id', VerifyTokenAdmin,usuarioCtrl.editUsuario);
-// router.delete('/:id', VerifyTokenAdmin,usuarioCtrl.deleteUsuario);
+
 // router.post('/estado', VerifyTokenAdmin,usuarioCtrl.cambiarEstadoUsuario);
 // router.post('/invitacion', VerifyTokenAdmin,usuarioCtrl.enviarInvitacion);
 // router.post('/mensaje', VerifyTokenAdmin,usuarioCtrl.enviarMensaje);

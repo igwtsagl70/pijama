@@ -32,6 +32,19 @@ export class PedidosService {
     return this.apiClient.apiGetParam<PedidoSimpleView[]>(ConstantsRoutes.PEDIDOS, params);
   }
 
+  getPedidosUsuario(user: string,palabra: string, fechaInicial: string, fechaFinal: string,page: number, orden: string): Observable<ApiResponse<PedidoSimpleView[]>> {
+    let params = new HttpParams();
+    params = params.set('user', user);
+    params = params.set('palabra', palabra);
+    params = params.set('fechaInicial', fechaInicial);
+    params = params.set('fechaFinal', fechaFinal);
+    params = params.set('page', page.toString());
+    params = params.set('orden', orden);
+    return this.apiClient.apiGetParam<PedidoSimpleView[]>(ConstantsRoutes.PEDIDOS_USUARIO, params);
+  }
+
+
+
   getPedidosParaSublimar(palabra: string, fechaInicial: string, fechaFinal: string,page: number, orden: string): Observable<ApiResponse<PedidoView[]>> {
     let params = new HttpParams();
     params = params.set('palabra', palabra);
@@ -41,6 +54,8 @@ export class PedidosService {
     params = params.set('orden', orden);
     return this.apiClient.apiGetParam<PedidoView[]>(ConstantsRoutes.PEDIDOS_PARA_SUBLIMAR, params);
   }
+
+
 
   postPedido(pedido: PedidoAgregar): Observable<ApiResponse<string>> {
     return this.apiClient.apiPost<string, PedidoAgregar>(ConstantsRoutes.PEDIDO_AGREGAR, pedido);
@@ -52,5 +67,12 @@ export class PedidosService {
 
   deletePedido(id: string): Observable<ApiResponse<string>> {
     return this.apiClient.apiDelete<string>(ConstantsRoutes.PEDIDO_ELIMINAR + `/${id}`);
+  }
+
+  confirmarPedido(id: string, pedido:PedidoSimpleView): Observable<ApiResponse<string>> {
+    return this.apiClient.apiPut<string, PedidoSimpleView>(ConstantsRoutes.PEDIDO_CONFIRMAR + `/${id}`, pedido);
+  }
+  obtenerPdfPedido(id: string): Observable<ApiResponse<string>> {
+    return this.apiClient.apiGet<string>(ConstantsRoutes.PEDIDO_PDF+ `/${id}`);
   }
 }

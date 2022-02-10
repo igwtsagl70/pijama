@@ -1,0 +1,100 @@
+<div class="box-main box-main-outlet">
+    <div class="header-main-outlet">
+        <div class="container container-full">
+            <div class="row justify-content-between">  
+                <div class="col-sm-12 col-md-2 form-col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha de inicio</mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="Selecciona una fecha" name="fecha" [value]="fecha.value" [(ngModel)]="fechaInicio">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-2 form-col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha final</mat-label>
+                        <input matInput [matDatepicker]="picker2" placeholder="Selecciona una fecha" name="fecha2" [value]="fecha2.value" [(ngModel)]=" fechaFinal">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col col-12 col-sm-12 col-md-2 order-2 order-md-1 form-col">
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput [(ngModel)]="palabra" name="palabra" (keyup)="buscarPalabra($event.target.value)" placeholder="Buscar...">
+                        <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col col-12 col-sm-12 col-md-6 second-opcions-header order-1 order-md-2">
+                    <button mat-button (click)="openAgregar()" ><mat-icon>add</mat-icon></button>             
+                    <button mat-button (click)="buscar()"><mat-icon>refresh</mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body-main-outlet">
+        <div class="container container-full">
+            <div class="row">
+                <div class="col-12  col-sm-12 col-md-12 form-col" *ngIf="documentos != null && documentos.length > 0">
+                    <table>
+                        <thead>
+                            <th>Fecha</th>
+                            <th>Folio</th>
+                            <th>Usuario</th>
+                            <th>No. Modelos</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>Sublimado</th>
+                            <th>Estado</th>
+                            <th></th>                          
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let documento of documentos; let i = index">
+                                <td>{{documento.fecha | date: 'dd/MM/yyyy': '+0'}}</td>
+                                <td>{{documento.folio}}</td>
+                                <td>{{documento.user}}</td>
+                                <td>{{documento.nModelos}}</td>
+                                <td>{{documento.cantidad}}</td>
+                                <td>{{documento.total | number: '.2-2'}}</td>
+                                <td *ngIf="documento.sublimado"><mat-icon>done</mat-icon></td>
+                                <td *ngIf="!documento.sublimado"><mat-icon>close</mat-icon></td>
+                                <td *ngIf="documento.estado == '1'">Capturado</td>
+                                <td *ngIf="documento.estado == '2'">Cancelado</td>
+                                <td *ngIf="documento.estado == '3'">Confirmado</td>
+                                <td *ngIf="documento.estado == '4'">Terminado</td>
+                                <td>
+                                    <button mat-button [matMenuTriggerFor]="menu"> <mat-icon>more_vert</mat-icon></button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item  (click)="openEditar(documento)">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Editar</span>
+                                        </button>
+                                        <button mat-menu-item  (click)="eliminar(documento)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Cancelar</span>
+                                        </button>
+                                        <button mat-menu-item  (click)="confirmar(documento)">
+                                            <mat-icon>check</mat-icon>
+                                            <span>Confirmar</span>
+                                        </button>
+                                    </mat-menu>                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-12 col-md-12 form-col" *ngIf="documentos == null || documentos.length == 0">                             
+                  <div class="search-instructions text-center" >
+                      <p>Sin resultados, realice una nueva búsqueda. es este</p>
+                  </div>
+                </div>
+                <div class="col-sm-12 text-right paginado" *ngIf="documentos != null && documentos.length > 0">                 
+                    <button mat-button (click)="anteriorPagina()" *ngIf="page != 0"> <mat-icon>arrow_back_ios</mat-icon></button>
+                    <button mat-button (click)="siguientePagina()" *ngIf="documentos != null && documentos.length == 25"> <mat-icon>arrow_forward_ios</mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -38,7 +38,7 @@ import { isThisSecond } from 'date-fns';
 export class AgregarPedidoComponent implements OnInit {
   pedido: PedidoAgregar = new PedidoAgregar();
   isAgregar = true;
-
+   admin = true;
   constructor(
     private configService: ConfigService,
     private toastr: ToastrService,
@@ -61,7 +61,9 @@ export class AgregarPedidoComponent implements OnInit {
     this.isAgregar = this.data.isAgregar;
 
     //Validar si viene de admin o de user
-    if(this.isAgregar && !this.identityUserService.isAdmin()){
+    this.admin = this.identityUserService.isAdmin();
+   if(this.isAgregar && !this.identityUserService.isAdmin()){
+ // if(this.isAgregar){
       //Si es usuario buscar pedido en cookie      
       var nPedido = this.sessionService.getCookiePedido();
       if(nPedido != null){
@@ -88,7 +90,7 @@ export class AgregarPedidoComponent implements OnInit {
               this.pedido = res.payload; 
               this.setTotales();
             } 
-            else { this.toastr.error('No se obtuvieron datos del usuario', 'Error'); }
+            else { this.toastr.error('No se obtuvieron datos del pedido', 'Error'); }
             }, error => {
               this.loadingService.hide();
               this.toastr.error(error);
@@ -154,12 +156,14 @@ export class AgregarPedidoComponent implements OnInit {
 
   agregarProducto(producto: PedidoProductos){
     if(this.pedido.pedidoProductos == null) this.pedido.pedidoProductos = new Array();
+    alert("entro a agregar");
     this.pedido.pedidoProductos.push(producto);
     this.setTotales();
   }
 
   editarProducto(inicial: PedidoProductos, result: PedidoProductos){
     Object.assign(inicial, result);
+    alert("entro a editar");
     this.setTotales();
   }
 

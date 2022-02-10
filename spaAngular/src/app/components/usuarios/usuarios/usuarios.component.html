@@ -1,121 +1,79 @@
-<div class="box-main-outlet">
-    <div class="header-main-outlet">
-        <div class="container container-full">
-            <div class="row justify-content-between">
+<div class="box-main box-main-outlet">
+  <div class="header-main-outlet">
+      <div class="container container-full">
+          <div class="row justify-content-between">  
+             
                 <div class="col col-12 col-sm-12 col-md-2 order-2 order-md-1 form-col">
-                    <div class="form-group">
-                        <mat-form-field appearance="outline">
-                        <mat-label>Buscar</mat-label>
-                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
-                        <mat-icon matSuffix>search</mat-icon>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col col-12 col-sm-12 col-md-2 order-2 order-md-1 form-col">
-                    <div class="form-group">
-                        <mat-slide-toggle (change)="buscar()" [(ngModel)]="faltantes" [ngModelOptions]="{standalone: true}" style="margin-top: 15px;">Sólo usuarios sin casa</mat-slide-toggle>
-                    </div>
-                </div>
-                <div class="col col-12 col-sm-12 col-md-8 second-opcions-header order-1 order-md-2">
-                    <button mat-raised-button color="accent" class="pointer" (click)="openAgregar()"><mat-icon matSuffix>add</mat-icon></button>
-                    <button mat-raised-button color="accent" class="pointer" (click)="buscar()"><mat-icon matSuffix>refresh</mat-icon></button> 
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="body-main-outlet">
-        <div class="container container-full">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 form-col">
-                        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="usuarios != null && usuarios.length > 0" >
-
-                                <!-- Usuario Column -->
-                                <ng-container matColumnDef="imagen" sticky>
-                                    <th mat-header-cell *matHeaderCellDef></th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <img *ngIf="element.imagen == '' || element.imagen == null" src="../../../../../assets/media/user.svg"/>
-                                        <div *ngIf="element.imagen !== '' && element.imagen != undefined" [style.background-image]="'url('+setUrlImagen(element)+')'" class="img-profile"></div>                                       
-                                    </td>
-                                </ng-container>
-
-                                <!-- Usuario Column -->
-                                <ng-container matColumnDef="user">
-                                  <th mat-header-cell *matHeaderCellDef > Usuario </th>
-                                  <td mat-cell *matCellDef="let element" class="pointer" (click)="openEditar(element)"> {{element.user}} </td>
-                                </ng-container>
-                              
-                                <!-- Nombre Column -->
-                                <ng-container matColumnDef="nombre">
-                                  <th mat-header-cell *matHeaderCellDef > Nombre </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                                </ng-container>
-                              
-                                <!-- Casa Column -->
-                                <ng-container matColumnDef="casa">
-                                  <th mat-header-cell *matHeaderCellDef > Casa </th>
-                                  <td mat-cell *matCellDef="let element">
-                                    <span *ngIf="element.casa != 'null'">{{element.casa}}</span>
-                                    <span *ngIf="element.casa == 'null'"> - </span> 
-                                  </td>
-                                </ng-container>
-                              
-                                <!-- Teléfono Column -->
-                                <ng-container matColumnDef="telefono">
-                                  <th mat-header-cell *matHeaderCellDef> Teléfono </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
-                                </ng-container>
-                              
-                                <!-- Tipo Column -->
-                                <ng-container matColumnDef="tipo">
-                                  <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
-                                </ng-container>
-                              
-                                <!-- Estado Column -->
-                                <ng-container matColumnDef="estado">
-                                  <th mat-header-cell *matHeaderCellDef > Estado </th>
-                                  <td mat-cell *matCellDef="let element"> 
-                                    <mat-icon matSuffix *ngIf="element.estado == '0'" class="pointer color-inactivo" title="Inactivo" (click)="cambiarEstado(element, 1)">toggle_on</mat-icon>
-                                    <mat-icon matSuffix *ngIf="element.estado == '1'" class="pointer color-activo"  title="Activo"(click)="cambiarEstado(element, 0)">toggle_off</mat-icon>
-                                  </td>
-                                </ng-container>
-
-                                <!-- Symbol Column -->
-                                <ng-container matColumnDef="accion">
-                                  <th mat-header-cell *matHeaderCellDef>  </th>
-                                  <td mat-cell *matCellDef="let element">
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="">
-                                      <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                    <mat-menu #menu="matMenu">
-                                      <button mat-menu-item (click)="openEditar(element)">
-                                        <mat-icon>edit</mat-icon>
-                                        <span>Editar</span>
+                  <div class="form-group">
+                      <mat-form-field appearance="outline">
+                      <mat-label>Buscar</mat-label>
+                      <input matInput [(ngModel)]="palabra" name="palabra" (keyup)="buscarPalabra($event.target.value)" placeholder="Buscar...">
+                      <mat-icon matSuffix>search</mat-icon>
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="col col-12 col-sm-12 col-md-6 second-opcions-header order-1 order-md-2">
+                  <button mat-button (click)="openAgregar()" *ngIf="identityUserService.isAdmin()"><mat-icon>add</mat-icon></button>             
+                  <button mat-button (click)="buscar()"><mat-icon>refresh</mat-icon></button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="body-main-outlet">
+      <div class="container container-full">
+          <div class="row">
+              <div class="col-12  col-sm-12 col-md-12 form-col" *ngIf="documentos != null && documentos.length > 0">
+                  <table>
+                      <thead>
+                          <th>Usuario</th>
+                          <th>Nombre</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th>Estado</th>
+                          <th></th>                          
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let documento of documentos; let i = index">
+                              <td>{{documento.user}}</td>
+                              <td>{{documento.nombre}}</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td ></td>
+                              <td *ngIf="documento.estado == '1'">Capturado</td>
+                              <td *ngIf="documento.estado == '2'">Cancelado</td>
+                              <td>
+                                  <button mat-button [matMenuTriggerFor]="menu"> <mat-icon>more_vert</mat-icon></button>
+                                  <mat-menu #menu="matMenu">
+                                      <!-- <button mat-menu-item  (click)="openEditar(documento)">
+                                          <mat-icon>edit</mat-icon>
+                                          <span>Editar</span>
+                                      </button> -->
+                                      <button mat-menu-item  (click)="eliminar(documento)">
+                                          <mat-icon>delete</mat-icon>
+                                          <span>Cancelar</span>
                                       </button>
-                                      <button mat-menu-item (click)="enviarInvitacion(element)">
-                                        <mat-icon>mail</mat-icon>
-                                        <span>Enviar invitación</span>
-                                      </button>
-                                      <button mat-menu-item (click)="openEnviarMensaje(element)">
-                                        <mat-icon>announcement</mat-icon>
-                                        <span>Enviar mensaje</span>
-                                      </button>
-                                      <button mat-menu-item (click)="eliminar(element)">
-                                        <mat-icon>delete_forever</mat-icon>
-                                        <span>Eliminar</span>
-                                      </button>
-                                    </mat-menu>                                    
-                                  </td>
-                                </ng-container>
-                              
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                              </table>                 
-                              <div class="search-instructions text-center" *ngIf="usuarios == null || usuarios.length == 0">
-                                  <p>Sin resultados, realice una nueva búsqueda.</p>
-                              </div>
+                                     
+                                  </mat-menu>                                    
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <div class="col-sm-12 col-md-12 form-col" *ngIf="documentos == null || documentos.length == 0">                             
+                <div class="search-instructions text-center" >
+                    <p>Sin resultados, realice una nueva búsqueda.</p>
                 </div>
-            </div>
-        </div>
-    </div>
+              </div>
+              <div class="col-sm-12 text-right paginado" *ngIf="documentos != null && documentos.length > 0">                 
+                  <button mat-button (click)="anteriorPagina()" *ngIf="page != 0"> <mat-icon>arrow_back_ios</mat-icon></button>
+                  <button mat-button (click)="siguientePagina()" *ngIf="documentos != null && documentos.length == 25"> <mat-icon>arrow_forward_ios</mat-icon></button>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>

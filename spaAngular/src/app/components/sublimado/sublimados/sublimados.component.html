@@ -62,15 +62,31 @@
                                 <td>
                                     <button mat-button [matMenuTriggerFor]="menu"> <mat-icon>more_vert</mat-icon></button>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item  (click)="openEditar(documento)">
+                                        <button mat-menu-item  (click)="buscarSublimado(documento)">
                                             <mat-icon>edit</mat-icon>
                                             <span>Editar</span>
                                         </button>
-                                        <button mat-menu-item  (click)="eliminar(documento)">
+                                       <button mat-menu-item  (click)="confirmarTerminar(documento,'3')">
+                                            <mat-icon>check</mat-icon>
+                                            <span>Confirmado</span>
+                                        </button>
+                                        <button mat-menu-item  (click)="confirmarTerminar(documento,'4')">
+                                            <mat-icon>verified</mat-icon>
+                                            <span>Terminado</span>
+                                        </button>
+                                        <button mat-menu-item  (click)="cancelar(documento,'2')">
                                             <mat-icon>delete</mat-icon>
                                             <span>Cancelar</span>
                                         </button>
-                                    </mat-menu>                                    
+                                        <button mat-menu-item  (click)="getPdf(documento,'1')">
+                                                <mat-icon>picture_as_pdf</mat-icon>
+                                                <span>Pantalón</span>
+                                            </button>
+                                           <button mat-menu-item  (click)="getPlayeraPdf(documento,'2')">
+                                                <mat-icon>picture_as_pdf</mat-icon>
+                                                <span>Playera</span>
+                                            </button>
+                                        </mat-menu>                                    
                                 </td>
                             </tr>
                         </tbody>

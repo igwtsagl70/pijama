@@ -23,6 +23,7 @@ const routes: Routes = [
           { path: 'productos', loadChildren: './components/productos/productos.module#ProductosModule' },
           { path: 'pedidos', loadChildren: './components/pedido/pedidos.module#PedidosModule' },
           { path: 'sublimados', loadChildren: './components/sublimado/sublimados.module#SublimadosModule' },
+          { path: 'usuarios', loadChildren: './components/usuarios/usuarios.module#UsuariosModule' },
       ]
   },
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
       component: PanelLayoutComponent,
       canActivate: [AuthGuard],
       children: [
-          { path: 'productos', loadChildren: './components/productos/productos.module#ProductosModule' },
+          { path: 'usuario', loadChildren: './components/pedido/pedidosUsuario.module#PedidosUsuarioModule' },
       ]
   },
 ];
