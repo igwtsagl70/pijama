@@ -22,6 +22,7 @@ import { SublimadosService } from '../sublimados.service';
 import { PedidoSimpleView, PedidoView } from 'src/app/models/pedido/pedidoSimpleView';
 import { SublimadoAgregar } from 'src/app/models/sublimado/sublimadoAgregar';
 import { PedidosSublimado, SublimadoModelo } from 'src/app/models/sublimado/sublimado';
+import { SublimadoSimpleView } from 'src/app/models/sublimado/sublimadoSimpleView';
 
 @Component({
   selector: 'app-agregar-sublimado',
@@ -40,6 +41,8 @@ import { PedidosSublimado, SublimadoModelo } from 'src/app/models/sublimado/subl
 export class AgregarSublimadoComponent implements OnInit {
   sublimado: SublimadoAgregar = new SublimadoAgregar();
   isAgregar = true;
+  _id = "";
+sublimadoEditar: SublimadoSimpleView = new SublimadoSimpleView();
 
   constructor(
     private configService: ConfigService,
@@ -52,7 +55,7 @@ export class AgregarSublimadoComponent implements OnInit {
     private errorValidationService: ErrorValidationService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<AgregarSublimadoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { pedidos: PedidoView[]}) { }
+    @Inject(MAT_DIALOG_DATA) public data: { pedidos: PedidoView[], isAgregar: boolean , _id: string, sublimado: SublimadoSimpleView}) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -60,7 +63,10 @@ export class AgregarSublimadoComponent implements OnInit {
 
   ngOnInit() {
     if(this.data == null) this.onNoClick();
-    this.isAgregar = true;
+    
+    this.isAgregar = this.data.isAgregar != null && !this.data.isAgregar ? false : true;
+    this._id = this.data._id != null && this.data._id != undefined ? this.data._id : ""; 
+    this.sublimadoEditar = this.data.sublimado != null ? this.data.sublimado : new SublimadoSimpleView();
     console.log("111");
     this.crearSublimadoModelo();
     this.setTotales();
@@ -203,6 +209,29 @@ export class AgregarSublimadoComponent implements OnInit {
           registro => {
               this.loadingService.hide();
               this.toastr.success('Datos correctos', 'Pedido enviado');
+              this.dialogRef.close(true);
+              }, error => {
+                  this.loadingService.hide();
+                  this.toastr.error(error);
+              }, () => {
+                  this.loadingService.hide();
+              }
+          ); 
+    }
+  }
+
+  editar() {
+    const confirmacion = confirm('Seguro de finalizar editado del sublimado?');
+    if (confirmacion) {      
+      this.loadingService.show();
+      this.sublimado._id = this._id;
+      this.sublimado.fecha = this.sublimado.fecha;
+      this.sublimado.fecha.setHours(this.sublimado.fecha.getHours() - (this.sublimado.fecha.getTimezoneOffset() / 60));
+      this.sublimadosService.putSublimado(this.sublimado)
+          .subscribe(
+          registro => {
+              this.loadingService.hide();
+              this.toastr.success('Datos correctos', 'Sublimado corregido');
               this.dialogRef.close(true);
               }, error => {
                   this.loadingService.hide();

@@ -8,11 +8,15 @@ import { IdentityUserService } from '../../../utils/IdentityUser/identity-user.s
 import { LoadingService } from '../../loading/loading.service';
 import { ConfigService } from 'src/app/utils/service/config.service';
 import { ProductoSimpleView } from 'src/app/models/producto/productoSimpleView';
-import { ProductoImagen } from 'src/app/models/producto/productosView';
+import { ProductoImagen, ProductoView } from 'src/app/models/producto/productosView';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ProductosService } from '../../productos/productos.service';
 import { PedidosService } from '../../pedido/pedido.service';
 import { PedidoSimpleView, PedidoView } from 'src/app/models/pedido/pedidoSimpleView';
+import { SublimadosService } from '../sublimados.service';
+import { Pedido } from 'src/app/models/pedido/pedido';
+import { PedidoAgregar } from 'src/app/models/pedido/pedidoAgregar';
+import { SublimadoSimpleView } from 'src/app/models/sublimado/sublimadoSimpleView';
 
 @Component({
   selector: 'app-asignar-pedido',
@@ -39,17 +43,21 @@ export class AsignarPedidoComponent implements OnInit {
   palabra = "";
   page = 0;
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
-  
+  isAgregar = true;
+  _id = "";
+ 
+
   constructor(
     private configService: ConfigService,
     private toastr: ToastrService,
+    private sublimadosService: SublimadosService,
     private pedidoService: PedidosService,
     private identityUserService: IdentityUserService,
     private loadingService: LoadingService,
     private errorValidationService: ErrorValidationService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<AsignarPedidoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { }) { }
+    @Inject(MAT_DIALOG_DATA) public data: {isAgregar: boolean, _id: string}) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -57,6 +65,11 @@ export class AsignarPedidoComponent implements OnInit {
 
   ngOnInit() {
     this.fechaInicio.setDate(1);
+    if (this.data != null) {
+   this.isAgregar = this.data.isAgregar;
+   this._id = this.data._id
+    
+    }
     this.startGetDatos();
   }
 
@@ -65,8 +78,17 @@ export class AsignarPedidoComponent implements OnInit {
           setTimeout(() => {
               this.startGetDatos();
           }, 1000);
-      } else { this.buscar(); }
+      } else { 
+        
+        this.buscar();
+        
+         }
   }
+
+
+
+
+
 
   buscarPalabra(filterValue: string): void{
     if(filterValue.length > 2 || filterValue.length == 0){

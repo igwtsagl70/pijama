@@ -4,9 +4,9 @@ const { Schema} = mongoose;
 const UsuarioSchema = new Schema({
     user: { type: String, required: true },
     pass: { type: String, required: true },
-    nombre: { type: String, required: true },
+    nombre: { type: String, required: false },
     rfc: { type: String, required: false },
-    domicilio: { type: Number, required: true },
+    domicilio: { type: String, required: false },
     tipo: { type: String, required: false },
     estado: { type: String, required: false },
 });

@@ -135,6 +135,7 @@ export class ProductosComponent implements OnInit {
         const dialogRef = this.dialog.open(ProductoImagenesComponent, {
           disableClose: false, autoFocus: false, width: '750px',  data: {producto: documento}
         });
+        this.buscar();
       }
     }
 

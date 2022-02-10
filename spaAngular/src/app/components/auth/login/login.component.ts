@@ -36,6 +36,7 @@ export class LoginComponent  implements OnInit, OnDestroy {
   onSubmit(form: any) {
       this.submitted = true;
       if (form.valid) {
+          console.log("urlCallBack " + this.urlCallback);
           this.authService.login(form.value.email, form.value.password)
               .subscribe(
                   user => {

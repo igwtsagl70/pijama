@@ -77,11 +77,12 @@ productoCtrl.editProducto = async (req, res) => {
 	try{
         const { id } = req.params;
         const producto = {
+            descripcion: req.body.descripcion,
             nombre: req.body.nombre,
             mayoreo: req.body.mayoreo,
             menudeo: req.body.menudeo
         };
-    
+    console.log(" nombre " + req.body.nombre);
         var rProducto = await Producto.findByIdAndUpdate(id, {$set: producto}, {new : true});
         if (!rProducto) return res.status(404).send('Producto no actualizado.');
         res.status(200).send({ success: true, payload: rProducto._id });
@@ -94,6 +95,7 @@ productoCtrl.editProducto = async (req, res) => {
 productoCtrl.deleteProducto = async (req, res) => {
 	try{
         const { id } = req.params;
+        console.log("req.body.estado");
         const producto = {
             estado: req.body.estado
         };
@@ -144,19 +146,57 @@ productoCtrl.eliminarImagen = async (req, res) => {
         var id = req.body._id;
         var archivo = req.body.archivoId;        
         var url = 'public/uploads/archivos/';
-
+        console.log("  id " +  id + " archivo " + archivo);
         // delete file named 'sample.txt'
-        fs.unlink(url + archivo, function (err) {
-            if (err) res.status(404).send("Imagen No eliminada");
-        }); 
+        // fs.unlink(url + archivo, function (err) {
+        //     if (err) res.status(404).send("Imagen No eliminada");
+        // }); 
+        const rProd = await Producto.findById(id);
+        if (!rProd) return res.status(404).send('Producto no encontrado.');
+       var imagenes = new Array()
+       for(var i = 0; i < rProd.imagenes.length; i++){
+    
+             console.log("imagen  id " + rProd.imagenes[i]._id + " archivo " + archivo)
+            if (rProd.imagenes[i]._id != archivo)
+             {
+                const file = {};
+                file._id = rProd.imagenes[i]._id;
+                file.nombre = rProd.imagenes[i].nombre;
+                file.url = rProd.imagenes[i].url;
+                imagenes.push(file);
+             }else
+             {
+             console.log("iguales");
 
-        var rProducto = await Producto.findByIdAndUpdate(id, { $pull: { 'archivos': {  _id: archivo } } }, {new : true});
-
-        if (!rProducto) return res.status(404).send('Imagen no eliminada.');
+             }
+         }
+       //  imagenes = rProd.imagenes;
+        // console.log("  long rprod imagen " +  rProd.imagenes.length);
+        // console.log("  long  imagenes " +  imagenes.length);
+       
+  
+         rProd.imagenes = new Array();
+         for(var i = 0; i < imagenes.length; i++){
+    
+            console.log("imagen 2 id " + imagenes[i]._id + " archivo  2 " + archivo)
+          
+               const file = {};
+               file._id = imagenes[i]._id;
+               file.nombre = imagenes[i].nombre;
+               file.url = imagenes[i].url;
+               rProd.imagenes.push(file);
+            
+        }
+        
+        // rProd.imagenes = imgs;
+        console.log("  long rprod imagen 2 " +  rProd.imagenes.length);
+        console.log("  long  imagenes 2 " +  imagenes.length);
+        var rProducto = rProd.save();
+        if (!rProducto) return res.status(404).send('Imagen no eliminada después de save.');
         res.status(200).send({ success: true, payload: "ok" });
     }
     catch(e){
-        res.status(404).send("Imagen no eliminada");
+        res.status(404).send("Imagen no eliminada en catch");
     }
 }
 

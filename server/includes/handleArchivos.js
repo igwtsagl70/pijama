@@ -1,7 +1,7 @@
 const path = require('path');
 const uuidv4 = require('uuid/v4')
 const multer = require('multer');
-var dir = './public/uploads/archivos/';
+var dir = './public/archivos/';
 var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 

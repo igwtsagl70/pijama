@@ -11,6 +11,7 @@ import { AgregarUsuarioComponent } from '../agregar-usuario/agregar-usuario.comp
 import { MatDialog } from '@angular/material';
 import { UsuarioCambioEstado } from 'src/app/models/usuario/usuarioCambioEstado';
 import { EnviarMensajeComponent } from '../enviar-mensaje/enviar-mensaje.component';
+import { UsuarioSimpleView } from 'src/app/models/usuario/UsuarioSimpleView';
 
 @Component({
   selector: 'app-usuarios',
@@ -19,10 +20,15 @@ import { EnviarMensajeComponent } from '../enviar-mensaje/enviar-mensaje.compone
   providers: [UsuarioService]
 })
 export class UsuariosComponent implements OnInit {
-  displayedColumns: string[] = ['imagen', 'user', 'nombre', 'casa', 'telefono', 'tipo', 'estado', 'accion'];
+ // displayedColumns: string[] = ['imagen', 'user', 'nombre', 'casa', 'telefono', 'tipo', 'estado', 'accion'];
   usuarios: UsuarioView[] = new Array();
   dataSource = new MatTableDataSource(this.usuarios);
-  faltantes = false;
+  fechaInicio = new Date();  
+  fechaFinal = new Date();
+  documentos: UsuarioSimpleView[] = new Array();
+  palabra = "";
+  page = 0;
+
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
@@ -36,7 +42,7 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
-    this.isMobile();
+   // this.isMobile();
     this.startGetDatos();
   }
 
@@ -59,16 +65,15 @@ export class UsuariosComponent implements OnInit {
   }
 
   buscar(): void {
+    this.documentos = new Array();
     this.loadingService.show();
-    const sFaltantes = this.faltantes ? '1' : '0';
-    this.usuarioService.getUsuarios(sFaltantes).subscribe(
+ 
+    this.usuarioService.getUsuarios(this.palabra, this.page, "").subscribe(
         res => {
           this.loadingService.hide();
           if (res.success) {
             if (res.payload != null && res.payload.length > 0) {
-              this.usuarios = res.payload;
-              this.dataSource = new MatTableDataSource(res.payload);
-              this.dataSource.sort = this.sort;
+              this.documentos = res.payload;
             } else {
               this.toastr.info('Sin datos', 'Consulta terminada');
             }
@@ -79,7 +84,6 @@ export class UsuariosComponent implements OnInit {
         }
     );
   }
-
   setUrlImagen(usuario: UsuarioView): string {
     return this.configService.getApiURI() + '/' + usuario.imagen;
   }

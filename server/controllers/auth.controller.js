@@ -24,9 +24,9 @@ authCtrl.register = async (req, res) => {
     Usuario.create({
         user: req.body.email,
         pass: hashedPassword,
-        nombre: '',
+        nombre: 'Chava',
         rfc: '',
-        domicilio: '',
+        domicilio: 'Lichita 777',
         tipo: 'user',
         estado: '1'
     }).then(r => {
@@ -40,7 +40,7 @@ authCtrl.register = async (req, res) => {
 
       }
     }).catch(e => {
-        res.status(404).send("Usuario No creado");
+        res.status(404).send("Usuario No creado email" + req.body.email + " password " + req.body.password + " error " + e);
     })
 }
 
