@@ -384,8 +384,8 @@ console.log("antes del doc");
     
 };
 
-      
-   
+
+
 console.log("después del array sublimado PRODUCTOS longitud " + productos.length);
 
 
@@ -594,8 +594,7 @@ console.log("antes del doc");
     
 };
 
-      
-   
+
 console.log("después del array sublimado PRODUCTOS longitud " + productos.length);
 
 

@@ -439,11 +439,14 @@ doc.text("Total: $" + new Intl.NumberFormat('es-MX', {minimumFractionDigits: 2})
             {key: 'nombre', label: 'Nombre', align: 'left'},
             // {key: 'mayoreo', label: 'Cantidad mayoreo', align: 'left'},
             // {key: 'menudeo', label: 'Cantidad menudeo', align: 'right'},
-            {key: 'nPiezas', label: 'Existencia'},
-            {key: 'cantidad', label: 'Cantidad', align: 'right'},
-            {key: 'tipo', label: 'Tipo', align: 'right'},
-            {key: 'genero', label: 'Genero', align: 'right'},
-            {key: 'talla', label: 'Talla', align: 'right'}
+           // {key: 'nPiezas', label: 'Existencia'},
+            {key: 'cantidad', label: 'Cantidad', align: 'center'},
+            {key: 'tipo', label: 'Tipo', align: 'center'},
+            {key: 'genero', label: 'Genero', align: 'center'},
+            {key: 'talla', label: 'Talla', align: 'center'}
+        
+        
+        
         ],     
             productos, {
               border: null,
